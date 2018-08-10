@@ -1,16 +1,16 @@
 ---
 declared-services:
   speech-to-text-service:
-    label: speech_to_text
+    label: Speech to Text-WDM
     plan: standard
   conversation-service:
-    label: conversation
+    label: Watson Assistant (formerly Conversation)-WDM
     plan: free
   text-to-speech-service:
-    label: text_to_speech
+    label: Speech to Text-WDM
     plan: standard
 applications:
-- name: speak-to-watson-app
+- name: watson-dispatch-manager
   command: node app.js
   buildpack: sdk-for-nodejs
   path: .
