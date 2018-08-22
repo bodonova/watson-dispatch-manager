@@ -867,6 +867,11 @@ var processString = function(baseString, isFinished) {
     $('#resultsText').val(baseString);
   }
 
+
+  if(baseString.indexOf("Limerick") >= 0){document.getElementById("match_flood").style.display = 'block'; }
+  if(baseString.indexOf("Dublin") >= 0){document.getElementById("match_fire").style.display = 'block'; }
+
+
 }
 
 exports.showJSON = function(msg, baseJSON) {
