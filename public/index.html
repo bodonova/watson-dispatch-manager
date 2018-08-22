@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Speak to Watson Dispatch Manager</title>
+    <meta name="viewport" content="width=dev\ice-width, initial-scale=1">
+    <title>Watson Dispatch Manager</title>
     <link href="css/watson-bootstrap-style.css" rel="stylesheet">
     <link href="css/browser-compatibility.css" rel="stylesheet">
     <link href="css/demo-stt.css" rel="stylesheet">
@@ -17,18 +17,19 @@
     <!-- Step 1 Section-->
 	<div class="container">
 	    <div class="col-lg-12 col-md-12 col-xs-12 main-header">
-          <h1>Speak to Watson Dispatch Manager</h1>
+          <h1>Watson Dispatch Manager</h1>
         </div>
 	  <!-- Step 3 Section-->
 	  <!-- First column of inputs -->
-	  <div class="row">
+	
+	<!--
+		<div class="row">
 	  	<div class="col-lg-12 col-md-12 col-sm-12 intro-copy">
 	  		<div class="col-lg-10 col-lg-push-1 col-md-12 col-sm-12">
-					<p class="help-block">You can speak to the Watson Dispatch Manager using your microphone.
+					<p class="help-block">Speak to Watson Dispatch Manager here.
             (compatible only with <a href="https://www.google.com/intl/en/chrome/browser/desktop/">Google Chrome</a>
 						and <a href="https://www.mozilla.org/en-US/firefox/new/">Mozilla Firefox</a>).
-						Click on the "record audio" button to activate your microphone and start speaking when it turns red. 
-						Click on the button again when you have finished speaking.
+					
           <br />
 					<a href="http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/">Built with IBM Watson</a>
 					 |
@@ -36,9 +37,10 @@
 					 |
 					<a href="https://github.com/bodonova/watson-dispatch-manager">Fork me on Github</a>
 					</p>
-				</div><!-- .col-lg-8 -->
+				</div>
 	  	</div>
-	  </div>
+		</div>
+	-->
 
 		<div class="row">
 		  <div class="col-lg-12 col-md-12 col-sm-12">
@@ -50,6 +52,58 @@
 		  </div>
 		</div><!-- row -->
 
+
+
+		<div class="manager">
+			<!-- dispatch_row title -->
+			<div class="dispatch_row title">
+				<ul>
+					<li>Incident #</li>
+					<li>Caller Name</li>
+					<li><span class="title-hide"></span>Type</li>
+					<li>Dispatched?</li>
+					<li>Time to destination</li>
+				</ul>
+			</div>
+			<!-- dispatch_row 1 - fadeIn -->
+
+
+			<div class="match_flood" id="match_flood">
+			<section class="dispatch_row-fadeIn-wrapper">
+				<article class="dispatch_row fadeIn nfl">
+					<ul>
+						<li><a href="#">Incident #41552</a><span class="small">2mins</span></li>
+						<li>Brian O'Donovan</li>
+						<li>Flood</li>
+						<li>Yes</li>
+						<li>0:12mins</li>
+					</ul>
+					<ul class="more-content">
+						<li>Fifteen reports about flooding in the Sandymount area. There is breach in the sea wall at Strand road.
+						</li>
+					</ul>
+				</article>
+			</section>
+			</div>
+
+			<div class="match_fire" id="match_fire">
+				<section class="dispatch_row-fadeIn-wrapper">
+					<article class="dispatch_row fadeIn pga">
+						<ul>
+							<li><a href="#">Incident #41552</a><span class="small">2mins</span></li>
+							<li>Sean Sweeney</li>
+							<li>Fire</li>
+							<li>Yes</li>
+							<li>0:12mins</li>
+						</ul>
+						<ul class="more-content">
+							<li>Fire on Kincora road Clontarf. 3 houses on fire. Two houses unoccupied. Small children need to be rescued from the third house.
+							</li>
+						</ul>
+					</article>
+				</section>
+			</div>
+		</div>
 
 		<div class="row">
 		  <nav class="navbar navbar-inverse">
