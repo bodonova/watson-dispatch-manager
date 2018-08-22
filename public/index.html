@@ -8,7 +8,10 @@
     <link href="css/watson-bootstrap-style.css" rel="stylesheet">
     <link href="css/browser-compatibility.css" rel="stylesheet">
     <link href="css/demo-stt.css" rel="stylesheet">
-    <link rel="icon" type="image/png" href="images/watson-conversation.png">
+		<link rel="icon" type="image/png" href="images/watson-conversation.png">
+		<script async defer
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDL-6qVt_s0lMHYF8D9hefFLG-C805mdJc&callback=initMap">
+</script>
   </head>
  <body>
     <!-- top nav section -->
@@ -54,6 +57,29 @@
 
 
 
+
+<!-- map start -->
+<div class="row">
+<div id="map"></div>
+<div id="form">
+	<table>
+	<tr><td>Name:</td> <td><input type='text' id='name'/> </td> </tr>
+	<tr><td>Address:</td> <td><input type='text' id='address'/> </td> </tr>
+	<tr><td>Type:</td> <td><select id='type'> +
+						 <option value='Fire' SELECTED>Fire</option>
+						 <option value='flood'>Flood</option>
+						 </select> </td></tr>
+						 <tr><td></td><td><input type='button' value='Save' onclick='saveData()'/></td></tr>
+	</table>
+</div>
+
+<script async defer
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDL-6qVt_s0lMHYF8D9hefFLG-C805mdJc&callback=initMap">
+</script>
+<!-- Replace the value of the key parameter with your own API key. --!>
+<!-- map end -->
+</div>
+
 		<div class="manager">
 			<!-- dispatch_row title -->
 			<div class="dispatch_row title">
@@ -97,12 +123,14 @@
 							<li>0:12mins</li>
 						</ul>
 						<ul class="more-content">
-							<li>Fire on Kincora road Clontarf. 3 houses on fire. Two houses unoccupied. Small children need to be rescued from the third house.
+							<li>Fire on Kincora road Clontarf. 3 houses on fire. Two of these houses are unoccupied, but there are small children needing to be rescued from the third house.
 							</li>
 						</ul>
 					</article>
 				</section>
-			</div>
+				</div>
+		
+			</article>
 		</div>
 
 		<div class="row">
