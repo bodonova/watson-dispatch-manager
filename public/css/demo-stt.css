@@ -1,4 +1,18 @@
 
+				/* Always set the map height explicitly to define the size of the div
+				 * element that contains the map. */
+         #map {
+          height:300px;
+          width:100%;
+				}
+				/* Optional: Makes the sample page fill the window. */
+				html, body {
+					height: 100%;
+					margin: 0;
+          padding :0;
+        }
+
+        #form{ display:none;}
 
 /* Google fonts - Open Sans */
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700);
@@ -347,7 +361,8 @@ ul.more-content li {
 }
 
 .main-header h1 {
-  color: #999999
+  color: #999999;
+  font-family: 'Open Sans', sans-serif;
 }
 
 .navbar-text {
@@ -362,7 +377,6 @@ ul.more-content li {
   text-align: center;
   display: inline-block;
   width: 100%;
-  float: left;
 }
 
 
@@ -412,7 +426,7 @@ ul.more-content li {
 
 button#playTTS,
 button#stopTTS {
-  background-color: #2f76bb; /* steel blue  */)
+  background-color: #2f76bb; /* steel blue  */
   border: 0;
   color: white;
 }
