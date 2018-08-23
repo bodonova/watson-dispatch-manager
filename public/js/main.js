@@ -442,9 +442,9 @@ module.exports={
     {
        "url": "https://stream.watsonplatform.net/speech-to-text/api/v1/models/en-US_BroadbandModel",
        "rate": 16000,
-       "name": "en-GB_BroadbandModel",
-       "language": "en-GB",
-       "description": "English" // "description": "UK English broadband model (16KHz)"
+       "name": "en-US_BroadbandModel",
+       "language": "en-US",
+       "description": "English" // "description": "USA English broadband model (16KHz)"
     }
    ]
 }
@@ -642,7 +642,7 @@ $(document).ready(function() {
     }
 
     var viewContext = {
-      currentModel: 'en-GB_BroadbandModel',
+      currentModel: 'en-US_BroadbandModel',
       models: models,
       token: token,
       bufferSize: BUFFERSIZE
@@ -654,7 +654,7 @@ $(document).ready(function() {
     localStorage.setItem('models', JSON.stringify(models));
 
     // Set default current model
-    localStorage.setItem('currentModel', 'en-GB_BroadbandModel');
+    localStorage.setItem('currentModel', 'en-US_BroadbandModel');
     localStorage.setItem('sessionPermissions', 'true');
 
 
@@ -719,7 +719,8 @@ var initSocket = exports.initSocket = function(options, onopen, onlistening, onm
   var sessionPermissionsQueryParam = sessionPermissions ? '0' : '1';
   var url = options.serviceURI || 'wss://stream.watsonplatform.net/speech-to-text/api/v1/recognize?watson-token='
     + token
-    + '&model=' + model;
+    + '&customization_id=13f71759-ce84-4e69-8129-3a73b44e0969'
+   + '&model=' + model;
   console.log('URL model', model);
   try {
     socket = new WebSocket(url);
@@ -1582,7 +1583,7 @@ var playSample = (function() {
     xhr.responseType = 'blob';
     xhr.onload = function(e) {
       var blob = xhr.response;
-      var currentModel = localStorage.getItem('currentModel') || 'en-GB_BroadbandModel';
+      var currentModel = localStorage.getItem('currentModel') || 'en-US_BroadbandModel';
       var reader = new FileReader();
       var blobToText = new Blob([blob]).slice(0, 4);
       reader.readAsText(blobToText);
@@ -1766,7 +1767,7 @@ var initPlaySample = require('./playsample').initPlaySample;
 exports.initSelectModel = function(ctx) {
 
   function isDefault(model) {
-    return model === 'en-GB_BroadbandModel';
+    return model === 'en-US_BroadbandModel';
   }
 
   ctx.models.forEach(function(model) {
@@ -1783,7 +1784,7 @@ exports.initSelectModel = function(ctx) {
   });
 
   function onChooseTargetLanguageClick() {
-  	var currentModel = localStorage.getItem('currentModel') || 'en-GB_BroadbandModel';
+  	var currentModel = localStorage.getItem('currentModel') || 'en-US_BroadbandModel';
 	var list = $("#dropdownMenuTargetLanguage");
 	list.empty();
 	if(currentModel == 'en-US_BroadbandModel') {
