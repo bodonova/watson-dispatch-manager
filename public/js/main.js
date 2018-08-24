@@ -626,6 +626,28 @@ utils.initPubSub();
 var initViews = require('./views').initViews;
 
 window.BUFFERSIZE = 8192;
+var customization_id = null;
+
+function getCustomizationID() {
+  // Make call to API to try and get customization ID
+  var hasBeenRunTimes = 0;
+  return function(callback) {
+    hasBeenRunTimes++
+    if (hasBeenRunTimes > 5) {
+      var err = new Error('Cannot reach server');
+      callback(null, err);
+      return;
+    }
+    var url = '/customization_id';
+    var customizationRequest = new XMLHttpRequest();
+    customizationRequest.open("GET", url, true);
+    customizationRequest.onload = function(evt) {
+      customization_id = customizationRequest.responseText;
+    };
+    customizationRequest.send();
+  }
+};
+
 
 $(document).ready(function() {
 
@@ -640,7 +662,11 @@ $(document).ready(function() {
       console.error('No authorization token available');
       console.error('Attempting to reconnect...');
     }
-
+    
+//    utils.getCustomizationID(function(customization_id) {
+//        console.log('Fetched customization_id', customization_id);
+//    });
+      
     var viewContext = {
       currentModel: 'en-US_BroadbandModel',
       models: models,
@@ -714,14 +740,15 @@ var initSocket = exports.initSocket = function(options, onopen, onlistening, onm
   var socket;
   var token = options.token;
   var model = options.model || localStorage.getItem('currentModel');
+  var customization_id='13f71759-ce84-4e69-8129-3a73b44e0969' // TODO hardcode for now, but read froim config eventually
   var message = options.message || {'action': 'start'};
   var sessionPermissions = withDefault(options.sessionPermissions, JSON.parse(localStorage.getItem('sessionPermissions')));
   var sessionPermissionsQueryParam = sessionPermissions ? '0' : '1';
   var url = options.serviceURI || 'wss://stream.watsonplatform.net/speech-to-text/api/v1/recognize?watson-token='
-    + token
-    + '&customization_id=13f71759-ce84-4e69-8129-3a73b44e0969'
-   + '&model=' + model;
-  console.log('URL model', model);
+    + token + '&model=' + model;
+  if (customization_id)
+    url +=  '&customization_id=' + customization_id;
+  console.log('URL', url);
   try {
     socket = new WebSocket(url);
   } catch(err) {

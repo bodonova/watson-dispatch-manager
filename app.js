@@ -49,6 +49,7 @@ if (!vcapServices) {
   console.log("Data from process.env.VCAP_SERVICES"+JSON.stringify(vcapServices));
 }
 var workspace_id = process.env.CONV_WORKSPACE_ID;
+var customization_id = process.env.CUSTOMIZATION_ID;
 if (fs.existsSync("vcap-local.json")) {
   //When running locally, the VCAP_SERVICES will not be set so read from vcap-local.json
   // console.log ("Original env data "+JSON.stringify(vcapServices));
@@ -57,8 +58,10 @@ if (fs.existsSync("vcap-local.json")) {
   var localJSON = JSON.parse(jsonData);
   console.log ("Parsed local data\n"+JSON.stringify(localJSON));
   vcapServices = extend(vcapServices,localJSON.VCAP_SERVICES);
-  workspace_id = localJSON.CONV_WORKSPACE_ID
+  workspace_id = localJSON.CONV_WORKSPACE_ID;
+  customization_id = localJSON.CUSTOMIZATION_ID;
 }
+console.log("Merged vcapServices"+JSON.stringify(vcapServices));
 
 // Test here to check a workspace_id was specified
 if (!workspace_id)
@@ -74,6 +77,18 @@ var stt_credentials = {
   password: vcapServices.speech_to_text[0].credentials.password
 };
 var authorization = watson.authorization(stt_credentials);
+console.log('stt_credentials:', stt_credentials);
+
+// Get customisation ID
+app.get('/customisation_id', function(req, res) {
+  if (customisation_id) {
+      console.log ("Getting customisation_id="+customisation_id);
+      res.send(customisation_id);
+  } else {
+      console.log ("No customisation_id to return");
+      res.send("");               
+  }
+});
 
 // Get token from Watson using your credentials
 app.get('/token', function(req, res) {
@@ -147,18 +162,20 @@ app.post('/message', function(req, res) {
 
 
 // -------------------------------- TTS ---------------------------------
-var tts_credentials = extend({
+var tts_credentials = extend(bluemix.getServiceCreds('text_to_speech'), {
   url: 'https://stream.watsonplatform.net/text-to-speech/api',
   version: 'v1',
   username: vcapServices.text_to_speech[0].credentials.username,
   password: vcapServices.text_to_speech[0].credentials.password
-}, bluemix.getServiceCreds('text_to_speech'));
+} );
+console.log('tts_credentials:', tts_credentials);
 
 // Create the service wrappers
 var textToSpeech = watson.text_to_speech(tts_credentials);
 
 app.get('/synthesize', function(req, res) {
   console.log ("Synthesizing response: "+JSON.stringify(req.query));
+  console.log("username:", tts_credentials.username, "password:", tts_credentials.password);
   var transcript = textToSpeech.synthesize(req.query);
   transcript.on('response', function(response) {
     if (req.query.download) {
