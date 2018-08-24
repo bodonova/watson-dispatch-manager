@@ -27,7 +27,7 @@
       position: clontarf1,
       map: map,
       title: 'Fire reported on Kincoard Rd from this location. Small children needing to be rescued from the third house.',
-      icon : '../../img/fire.png'
+      icon : './images/fire.png'
     });
     var clontarf2 = new google.maps.Marker({
       position: clontarf2,
