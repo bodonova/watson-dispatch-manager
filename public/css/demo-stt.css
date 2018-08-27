@@ -1,44 +1,28 @@
 
-				/* Always set the map height explicitly to define the size of the div
-				 * element that contains the map. */
-         #map {
-          height:300px;
-          width:100%;
-				}
-				/* Optional: Makes the sample page fill the window. */
-				html, body {
-					height: 100%;
-					margin: 0;
-          padding :0;
-        }
+  /* body */
+  body {
+    background: rgba(24, 21, 21, 0.836);
+    font-family: 'Open Sans', sans-serif;
+  }
 
-        #form{ display:none;}
+/* Always set the map height explicitly to define the size of the div
+ * element that contains the map. */
+ #map {
+  height:300px;
+  width:100%;
+	}
+	/* Optional: Makes the sample page fill the window. */
+	html, body {
+	height: 100%;
+	margin: 0;
+  padding :0;
+  }
+  
+  /*Form appearing just below map initially hidden */
+  #form{
+    display:none;
+  }
 
-/* Google fonts - Open Sans */
-@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700);
-/* colors */
-/* body */
-body {
-  background: rgba(24, 21, 21, 0.836);
-  font-family: 'Open Sans', sans-serif;
-}
-
-/* links */
-.nfl a, .mlb a, .nhl a, .pga a {
-  text-decoration: none;
-  transition: color 0.2s ease-out;
-}
-
-.nfl a {
-  color: #4fc0d2;
-}
-
-.nfl a:hover {
-  color: #268695;
-}
-
-
-/* wrapper */
 .manager {
   width: 100%;
   max-width: 1000px;
@@ -129,36 +113,34 @@ body {
     display: none;
   }
 }
+  
+  /* links */
+  .flood a, .fire a {
+    text-decoration: none;
+    transition: color 0.2s ease-out;
+  }
+  
+  .flood a {
+    color: #4fc0d2;
+  }
+  
+  .flood a:hover {
+    color: #268695;
+  }
 
-.nfl {
+.flood {
   border-left: 3px solid #1c616c;
 }
 
-.nfl:hover {
+.flood:hover {
   border-left: 3px solid #4fc0d2;
 }
 
-.mlb {
-  border-left: 3px solid #1d6e4b;
-}
-
-.mlb:hover {
-  border-left: 3px solid #52d29a;
-}
-
-.nhl {
-  border-left: 3px solid rgba(157, 121, 25, 0.7);
-}
-
-.nhl:hover {
-  border-left: 3px solid rgba(231, 196, 104, 0.7);
-}
-
-.pga {
+.fire {
   border-left: 3px solid #952f12;
 }
 
-.pga:hover {
+.fire:hover {
   border-left: 3px solid #eb7655;
 }
 
