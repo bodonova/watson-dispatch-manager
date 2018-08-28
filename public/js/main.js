@@ -1168,6 +1168,16 @@ function converse (textContent) {
 
 var ttsAudio = $('.audio-tts').get(0);
 
+
+// interpret typing enter in resultsText as an intention to submit
+$('#resultsText').keydown(function(event) {
+  // enter has keyCode = 13, change it if you want to use another button
+  if (event.keyCode == 13) {
+    $('#playTTS').click();
+    return false;
+  }
+});
+
 $('#playTTS').click(function() {
   var textContent = $('#resultsText').val();
   // ToDo indicate the confidence of the transcriotion e.g.
