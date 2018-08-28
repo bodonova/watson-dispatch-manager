@@ -11,7 +11,7 @@ var utils = require('../utils');
 var handleSelectedFile = exports.handleSelectedFile = (function() {
 
     var running = false;
-    localStorage.setItem('currentlyDisplaying', false);
+	localStorage.setItem('currentlyDisplaying', false);
 
     return function(token, file) {
 
@@ -23,6 +23,12 @@ var handleSelectedFile = exports.handleSelectedFile = (function() {
     // }
 
     $.publish('clearscreen');
+	$('#response textarea').val('');     	 // L.R.
+	ttsChunks.length = 0;						 // L.R.
+	var ttsAudio = $('.audio-tts').get(0);		 // L.R.
+	ttsAudio.pause();							 // L.R.
+	inputSpeechOn = true;						 // L.R.
+	ttsChunksIndex = 0;							 // L.R.
 
     localStorage.setItem('currentlyDisplaying', true);
     running = true;
@@ -88,12 +94,14 @@ var handleSelectedFile = exports.handleSelectedFile = (function() {
           function(evt) {
             console.log('Error reading file: ', evt.message);
             showError('Error: ' + evt.message);
+			inputSpeechOn = false;					 // L.R.
           },
           // On load end
           function() {
             socket.send(JSON.stringify({'action': 'stop'}));
+			inputSpeechOn = false;					 // L.R.
           });
-      }, 
+      },
         function(evt) {
           effects.stopToggleImage(timer, uploadImageTag, 'upload');
           uploadText.text('Select File');
