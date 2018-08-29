@@ -17,12 +17,17 @@
 
 'use strict';
 
-//import _ from 'lodash';
 var $ = require('jquery');
 
 window.initMap = require('./mapData').initMap;
-
+//window.saveData = require('./mapData').saveData;
+//window.downloadUrl = require('./mapData').downloadUrl;
+window.map = require('./mapData').map;
+//window.marker = require('./mapData').marker;
+//window.infowindow = require('./mapData').infowindow;
+//window.messagewindow = require('./mapData').messagewindow;
 window.context = require('./conversation').context;
+
 var conv_init = require('./conversation').conv_init;
 
 

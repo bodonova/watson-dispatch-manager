@@ -202,9 +202,9 @@ function converse (textContent) {
   http.setRequestHeader('Content-type', 'application/json');
   http.onreadystatechange = function() {
     if (http.readyState === 4 && http.status === 200 && http.responseText) {
-      console.log ('response='+http.responseText);
       var data =  JSON.parse(http.responseText);
       context = data.context; // store for future calls
+      console.log(context);
       $('#response textarea').val(data.output.text);
       TTS(data.output.text);
     }
