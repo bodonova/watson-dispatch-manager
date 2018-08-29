@@ -16,6 +16,7 @@
 /*global $:false */
 
 
+var $ = require('jquery');
 var utils = require('./utils');
 var Microphone = require('./Microphone');
 var showerror = require('./views/showerror');
