@@ -1,6 +1,7 @@
 
 'use strict';
 
+var $ = require('jquery');
 var initSocket = require('./socket').initSocket;
 var display = require('./views/displaymetadata');
 

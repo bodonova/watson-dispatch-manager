@@ -17,6 +17,20 @@
 
 'use strict';
 
+var $ = require('jquery');
+
+window.initMap = require('./mapData').initMap;
+//window.saveData = require('./mapData').saveData;
+//window.downloadUrl = require('./mapData').downloadUrl;
+window.map = require('./mapData').map;
+//window.marker = require('./mapData').marker;
+//window.infowindow = require('./mapData').infowindow;
+//window.messagewindow = require('./mapData').messagewindow;
+window.context = require('./conversation').context;
+
+var conv_init = require('./conversation').conv_init;
+
+
 var Microphone = require('./Microphone');
 var models = require('./data/models.json').models;
 var utils = require('./utils');
@@ -24,12 +38,35 @@ utils.initPubSub();
 var initViews = require('./views').initViews;
 
 window.BUFFERSIZE = 8192;
+var customization_id = null;
+
+function getCustomizationID() {
+  // Make call to API to try and get customization ID
+  var hasBeenRunTimes = 0;
+  return function(callback) {
+    hasBeenRunTimes++
+    if (hasBeenRunTimes > 5) {
+      var err = new Error('Cannot reach server');
+      callback(null, err);
+      return;
+    }
+    var url = '/customization_id';
+    var customizationRequest = new XMLHttpRequest();
+    customizationRequest.open("GET", url, true);
+    customizationRequest.onload = function(evt) {
+      customization_id = customizationRequest.responseText;
+    };
+    customizationRequest.send();
+  }
+};
+
 
 $(document).ready(function() {
 
   // Make call to API to try and get token
   utils.getToken(function(token) {
 
+    window.initMap = initMap;
     window.onbeforeunload = function(e) {
       localStorage.clear();
     };
@@ -66,5 +103,8 @@ $(document).ready(function() {
     });
 
   });
+
+  console.log ("Initializing the conversation service");
+  conv_init();
 
 });

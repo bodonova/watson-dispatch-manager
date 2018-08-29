@@ -11,7 +11,6 @@ exports.initRecordButton = function(ctx) {
   var recordButton = $('#recordButton');
 
   recordButton.click((function() {
-
     var running = false;
     var token = ctx.token;
     var micOptions = {
@@ -39,21 +38,30 @@ exports.initRecordButton = function(ctx) {
             console.log(msg);
             showError(msg);
             running = false;
+			inputSpeechOn = false;						 // L.R.
           } else {
             recordButton.css('background-color', '#d74108');
             recordButton.find('img').attr('src', 'images/stop.svg');
             console.log('starting mic');
             mic.record();
             running = true;
+			$('#response textarea').val('');     	 // L.R.
+			ttsChunks.length = 0;						 // L.R.
+			var ttsAudio = $('.audio-tts').get(0);		 // L.R.
+			ttsAudio.pause();							 // L.R.
+			inputSpeechOn = true;						 // L.R.
+			ttsChunksIndex = 0;							 // L.R.
           }
         });
-      } else {
+      }
+	  else {
         console.log('Stopping microphone, sending stop action message');
         recordButton.removeAttr('style');
         recordButton.find('img').attr('src', 'images/microphone.svg');
         $.publish('hardsocketstop');
         mic.stop();
         running = false;
+		inputSpeechOn = false;						 	 // L.R.
       }
     }
   })());
