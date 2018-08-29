@@ -3,3 +3,4 @@ uploads/
 .DS_Store
 .env
 vcap-local.json
+public/js/main.js
