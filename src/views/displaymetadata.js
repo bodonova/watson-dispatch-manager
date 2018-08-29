@@ -98,14 +98,14 @@ var processString = function(baseString, isFinished) {
 
 
   if(baseString.indexOf("flood") >= 0){
-    document.getElementById("match_flood").style.display = 'block'; 
+    document.getElementById("match_flood").style.display = 'block';
     map.setCenter(new google.maps.LatLng(53.329633, -6.210746))
     map.setZoom(15);
   }
 
 
   if(baseString.indexOf("fire") >= 0){
-    document.getElementById("match_fire").style.display = 'block'; 
+    document.getElementById("match_fire").style.display = 'block';
     map.setCenter(new google.maps.LatLng(53.3606109, -6.1843204))
     map.setZoom(15);
   }
@@ -217,6 +217,15 @@ function converse (textContent) {
 
 
 var ttsAudio = $('.audio-tts').get(0);
+
+// interpret typing enter in resultsText as an intention to submit
+$('#resultsText').keydown(function(event) {
+  // enter has keyCode = 13, change it if you want to use another button
+  if (event.keyCode == 13) {
+    $('#playTTS').click();
+    return false;
+  }
+});
 
 $('#playTTS').click(function() {
   var textContent = $('#resultsText').val();
