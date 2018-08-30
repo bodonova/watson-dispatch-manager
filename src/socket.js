@@ -29,24 +29,15 @@ var hideError = showerror.hideError;
 
 // Initialize closure, which holds maximum getToken call count
 var tokenGenerator = utils.createTokenGenerator();
-//var customizationGenerator = utils.createCustomizationGenerator();
-//customizationGenerator.getToken(function(token, err) {
-//        if (err) {
-//          $.publish('hardsocketstop');
-//          return false;
-//        }
-//        console.log('Fetching additional token...');
-//        options.token = token;
-//        initSocket(options, onopen, onlistening, onmessage, onerror, onclose);
-//      });
-console.error('Checking customization_id');
+
+console.log('Checking customization_id');
 var customization_id=null
 var url = '/customization_id';
 var customizationRequest = new XMLHttpRequest();
 customizationRequest.open("GET", url, true);
 customizationRequest.onload = function(evt) {
   customization_id = customizationRequest.responseText;
-  console.error('customization_id:', customization_id)
+  console.log('customization_id:', customization_id)
 };
 customizationRequest.send();
 
@@ -58,7 +49,6 @@ var initSocket = exports.initSocket = function(options, onopen, onlistening, onm
   var socket;
   var token = options.token;
   var model = options.model || localStorage.getItem('currentModel');
-  //var customization_id='13f71759-ce84-4e69-8129-3a73b44e0969' // TODO hardcode for now, but read froim config eventually
   console.log('Initalizing STT with customization_id:', customization_id)
   var message = options.message || {'action': 'start'};
   var sessionPermissions = withDefault(options.sessionPermissions, JSON.parse(localStorage.getItem('sessionPermissions')));
@@ -67,7 +57,7 @@ var initSocket = exports.initSocket = function(options, onopen, onlistening, onm
     + token + '&model=' + model;
   if (customization_id)
     url +=  '&customization_id=' + customization_id;
-  console.error('URL', url);
+  console.log('STT WS URL', url);
   try {
     socket = new WebSocket(url);
   } catch(err) {
