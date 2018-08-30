@@ -1,185 +1,6 @@
-  var map;
-	var marker;
-	var infowindow;
-	var messagewindow;
-
-	function initMap() {
-
-    var ireland = {lat:53.45, lng:-7.8515377}
-    var clontarf1 = {lat: 53.3606109, lng: -6.1834204};
-    var clontarf2 = {lat : 53.3613312, lng: -6.1833206}
-    var clontarf3 = {lat : 53.361203, lng: -6.1833216}
-    var limerick = {lat: 53.2734, lng: 131.044};
-    var sandymount1 = {lat: 53.329633, lng:-6.210746 };
-    var sandymount2 = {lat: 53.326699, lng:-6.210814 };
-    var sandymount3 = {lat: 53.329228, lng:-6.210944 };
-    var sandymount4 = {lat: 53.329813, lng:-6.210629 };
-    var sandymount5 = {lat: 53.329512, lng:-6.210442 };
-    var sandymount6 = {lat: 53.329496, lng:-6.210213 };
-    var sandymount7 = {lat: 53.329433, lng:-6.210123 };
-
-		map = new google.maps.Map(document.getElementById('map'), {
-			center: ireland,
-      zoom: 6
-    });
-
-    var clontarf1 = new google.maps.Marker({
-      position: clontarf1,
-      map: map,
-      title: 'Fire reported on Kincoard Rd from this location. Small children needing to be rescued from the third house.',
-      icon : './images/fire.png'
-    });
-    var clontarf2 = new google.maps.Marker({
-      position: clontarf2,
-      map: map,
-      title: 'Fire reported on Kincoard Rd from this location.'
-    });
-    var clontarf3 = new google.maps.Marker({
-      position: clontarf3,
-      map: map,
-      title: 'Fire reported on Kincoard Rd from this location.'
-    });
-    var sandymount2 = new google.maps.Marker({
-      position: sandymount2,
-      map: map,
-      title: 'Flood reported in Sandymount area from this location. High risk of flooding due to a breach in the sea wall at Strand road'
-    });
-    var sandymount3 = new google.maps.Marker({
-      position: sandymount3,
-      map: map,
-      title: 'Flood reported in Sandymount area from this location. High risk of flooding due to a breach in the sea wall at Strand road'
-    });
-    var sandymount4 = new google.maps.Marker({
-      position: sandymount4,
-      map: map,
-      title: 'Flood reported in Sandymount area from this location. High risk of flooding due to a breach in the sea wall at Strand road'
-    });
-    var sandymount5 = new google.maps.Marker({
-      position: sandymount5,
-      map: map,
-      title: 'Flood reported in Sandymount area from this location. High risk of flooding due to a breach in the sea wall at Strand road'
-    });
-    var sandymount5 = new google.maps.Marker({
-      position: sandymount5,
-      map: map,
-      title: 'Flood reported in Sandymount area from this location. High risk of flooding due to a breach in the sea wall at Strand road'
-    });
-    var sandymount6 = new google.maps.Marker({
-      position: sandymount6,
-      map: map,
-      title: 'Flood reported in Sandymount area from this location. High risk of flooding due to a breach in the sea wall at Strand road'
-    });
-    var sandymount7 = new google.maps.Marker({
-      position: sandymount7,
-      map: map,
-      title: 'Flood reported in Sandymount area from this location. High risk of flooding due to a breach in the sea wall at Strand road'
-    });
-
-
-
-
-		infowindow = new google.maps.InfoWindow({
-      content: document.getElementById('form')
-		});
-
-		messagewindow = new google.maps.InfoWindow({
-			content: document.getElementById('message')
-		});
-
-		google.maps.event.addListener(map, 'click', function(event) {
-			marker = new google.maps.Marker({
-				position: event.latLng,
-				map: map
-			});
-
-
-			google.maps.event.addListener(marker, 'click', function() {
-        infowindow.open(map, marker);
-        document.getElementById('form').style.display = "block";
-			});
-		});
-	}
-
-	function saveData() {
-		var name = escape(document.getElementById('name').value);
-		var address = escape(document.getElementById('address').value);
-		var type = document.getElementById('type').value;
-		var latlng = marker.getPosition();
-		var url = 'phpsqlinfo_addrow.php?name=' + name + '&address=' + address +
-							'&type=' + type + '&lat=' + latlng.lat() + '&lng=' + latlng.lng();
-
-		downloadUrl(url, function(data, responseCode) {
-
-			if (responseCode == 200 && data.length <= 1) {
-				infowindow.close();
-				messagewindow.open(map, marker);
-			}
-		});
-	}
-
-	function downloadUrl(url, callback) {
-		var request = window.ActiveXObject ?
-				new ActiveXObject('Microsoft.XMLHTTP') :
-				new XMLHttpRequest;
-
-		request.onreadystatechange = function() {
-			if (request.readyState == 4) {
-				request.onreadystatechange = doNothing;
-				callback(request.responseText, request.status);
-			}
-		};
-
-		request.open('GET', url, true);
-		request.send(null);
-	}
-
-	function doNothing () {
-	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// a global context variable so we remember it between calls
-var context = {};
-
-function conv_init () {
-  console.log("Initialising conversation");
-  // Build request payload
-  var payloadToWatson = {"text": " " , "context": {} };
-  console.log("meaasge payload: "+JSON.stringify(payloadToWatson));
-
-  // Built http request
-  var http = new XMLHttpRequest();
-  http.open('POST', '/message', true);
-  http.setRequestHeader('Content-type', 'application/json');
-  http.onreadystatechange = function() {
-    if (http.readyState === 4 && http.status === 200 && http.responseText) {
-      console.log ('response='+http.responseText);
-      var data =  JSON.parse(http.responseText);
-      context = data.context; // store for future calls
-      $('#response textarea').val(data.output.text);
-    }
-  };
-
-  // Send request
-  var params = JSON.stringify(payloadToWatson);
-  http.send(params);
-}
-
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 /**
- * Copyright 2015 IBM Corp. All Rights Reserved.
+ * Copyright 2014 IBM Corp. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the 'License');
  * you may not use this file except in compliance with the License.
@@ -320,7 +141,7 @@ Microphone.prototype.stop = function() {
   if (!this.recording)
     return;
   this.recording = false;
-  // this.stream.stop();
+  this.stream.stop();
   this.requestedAccess = false;
   this.mic.disconnect(0);
   this.mic = null;
@@ -425,7 +246,7 @@ var exportDataBuffer = function(buffer, bufferSize) {
 
 Microphone.prototype._exportDataBuffer = function(buffer){
   utils.exportDataBuffer(buffer, this.bufferSize);
-};
+}; 
 
 
 // Functions used to control Microphone events listeners.
@@ -439,13 +260,48 @@ module.exports = Microphone;
 },{"./utils":7}],2:[function(require,module,exports){
 module.exports={
    "models": [
-    {
-       "url": "https://stream.watsonplatform.net/speech-to-text/api/v1/models/en-US_BroadbandModel",
-       "rate": 16000,
-       "name": "en-US_BroadbandModel",
-       "language": "en-US",
-       "description": "English" // "description": "USA English broadband model (16KHz)"
-    }
+      {
+         "url": "https://stream.watsonplatform.net/speech-to-text/api/v1/models/en-US_BroadbandModel", 
+         "rate": 16000, 
+         "name": "en-US_BroadbandModel", 
+         "language": "en-US", 
+         "description": "US English broadband model (16KHz)"
+      }, 
+      {
+         "url": "https://stream.watsonplatform.net/speech-to-text/api/v1/models/en-US_NarrowbandModel", 
+         "rate": 8000, 
+         "name": "en-US_NarrowbandModel", 
+         "language": "en-US", 
+         "description": "US English narrowband model (8KHz)"
+      },
+      {
+         "url": "https://stream.watsonplatform.net/speech-to-text/api/v1/models/es-ES_BroadbandModel", 
+         "rate": 16000, 
+         "name": "es-ES_BroadbandModel", 
+         "language": "es-ES", 
+         "description": "Spanish broadband model (16KHz)"
+      }, 
+      {
+         "url": "https://stream.watsonplatform.net/speech-to-text/api/v1/models/es-ES_NarrowbandModel", 
+         "rate": 8000, 
+         "name": "es-ES_NarrowbandModel", 
+         "language": "es-ES", 
+         "description": "Spanish narrowband model (8KHz)"
+      }, 
+      {
+         "url": "https://stream.watsonplatform.net/speech-to-text/api/v1/models/ja-JP_BroadbandModel", 
+         "rate": 16000, 
+         "name": "ja-JP_BroadbandModel", 
+         "language": "ja-JP", 
+         "description": "Japanese broadband model (16KHz)"
+      }, 
+      {
+         "url": "https://stream.watsonplatform.net/speech-to-text/api/v1/models/ja-JP_NarrowbandModel", 
+         "rate": 8000, 
+         "name": "ja-JP_NarrowbandModel", 
+         "language": "ja-JP", 
+         "description": "Japanese narrowband model (8KHz)"
+      }
    ]
 }
 
@@ -457,8 +313,6 @@ var hideError = require('./views/showerror').hideError;
 var initSocket = require('./socket').initSocket;
 
 exports.handleFileUpload = function(token, model, file, contentType, callback, onend) {
-
-    console.log ('Loading file '+file);
 
     // Set currentlyDisplaying to prevent other sockets from opening
     localStorage.setItem('currentlyDisplaying', true);
@@ -626,28 +480,6 @@ utils.initPubSub();
 var initViews = require('./views').initViews;
 
 window.BUFFERSIZE = 8192;
-var customization_id = null;
-
-function getCustomizationID() {
-  // Make call to API to try and get customization ID
-  var hasBeenRunTimes = 0;
-  return function(callback) {
-    hasBeenRunTimes++
-    if (hasBeenRunTimes > 5) {
-      var err = new Error('Cannot reach server');
-      callback(null, err);
-      return;
-    }
-    var url = '/customization_id';
-    var customizationRequest = new XMLHttpRequest();
-    customizationRequest.open("GET", url, true);
-    customizationRequest.onload = function(evt) {
-      customization_id = customizationRequest.responseText;
-    };
-    customizationRequest.send();
-  }
-};
-
 
 $(document).ready(function() {
 
@@ -662,11 +494,7 @@ $(document).ready(function() {
       console.error('No authorization token available');
       console.error('Attempting to reconnect...');
     }
-    
-//    utils.getCustomizationID(function(customization_id) {
-//        console.log('Fetched customization_id', customization_id);
-//    });
-      
+
     var viewContext = {
       currentModel: 'en-US_BroadbandModel',
       models: models,
@@ -695,12 +523,10 @@ $(document).ready(function() {
 
   });
 
-  console.log ("Initializing the conversation service");
-  conv_init();
-
 });
 
 },{"./Microphone":1,"./data/models.json":2,"./utils":7,"./views":13}],6:[function(require,module,exports){
+(function (global){
 /**
  * Copyright 2014 IBM Corp. All Rights Reserved.
  *
@@ -719,6 +545,7 @@ $(document).ready(function() {
 /*global $:false */
 
 
+var $ = (typeof window !== "undefined" ? window['jQuery'] : typeof global !== "undefined" ? global['jQuery'] : null);
 var utils = require('./utils');
 var Microphone = require('./Microphone');
 var showerror = require('./views/showerror');
@@ -731,6 +558,26 @@ var hideError = showerror.hideError;
 
 // Initialize closure, which holds maximum getToken call count
 var tokenGenerator = utils.createTokenGenerator();
+//var customizationGenerator = utils.createCustomizationGenerator();
+//customizationGenerator.getToken(function(token, err) {
+//        if (err) {
+//          $.publish('hardsocketstop');
+//          return false;
+//        }
+//        console.log('Fetching additional token...');
+//        options.token = token;
+//        initSocket(options, onopen, onlistening, onmessage, onerror, onclose);
+//      });
+console.error('Checking customization_id');
+var customization_id=null
+var url = '/customization_id';
+var customizationRequest = new XMLHttpRequest();
+customizationRequest.open("GET", url, true);
+customizationRequest.onload = function(evt) {
+  customization_id = customizationRequest.responseText;
+  console.error('customization_id:', customization_id)
+};
+customizationRequest.send();
 
 var initSocket = exports.initSocket = function(options, onopen, onlistening, onmessage, onerror, onclose) {
   var listening;
@@ -740,7 +587,8 @@ var initSocket = exports.initSocket = function(options, onopen, onlistening, onm
   var socket;
   var token = options.token;
   var model = options.model || localStorage.getItem('currentModel');
-  var customization_id='13f71759-ce84-4e69-8129-3a73b44e0969' // TODO hardcode for now, but read froim config eventually
+  //var customization_id='13f71759-ce84-4e69-8129-3a73b44e0969' // TODO hardcode for now, but read froim config eventually
+  console.log('Initalizing STT with customization_id:', customization_id)
   var message = options.message || {'action': 'start'};
   var sessionPermissions = withDefault(options.sessionPermissions, JSON.parse(localStorage.getItem('sessionPermissions')));
   var sessionPermissionsQueryParam = sessionPermissions ? '0' : '1';
@@ -748,7 +596,7 @@ var initSocket = exports.initSocket = function(options, onopen, onlistening, onm
     + token + '&model=' + model;
   if (customization_id)
     url +=  '&customization_id=' + customization_id;
-  console.log('URL', url);
+  console.error('URL', url);
   try {
     socket = new WebSocket(url);
   } catch(err) {
@@ -831,6 +679,8 @@ var initSocket = exports.initSocket = function(options, onopen, onlistening, onm
   };
 
 }
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"./Microphone":1,"./utils":7,"./views/showerror":18}],7:[function(require,module,exports){
 (function (global){
 
@@ -1046,35 +896,20 @@ var processString = function(baseString, isFinished) {
     $('#resultsText').val(baseString);
   }
 
-
-  if(baseString.indexOf("flood") >= 0){
-    document.getElementById("match_flood").style.display = 'block'; 
-    map.setCenter(new google.maps.LatLng(53.329633, -6.210746))
-    map.setZoom(15);
-  }
-
-
-  if(baseString.indexOf("fire") >= 0){
-    document.getElementById("match_fire").style.display = 'block'; 
-    map.setCenter(new google.maps.LatLng(53.3606109, -6.1843204))
-    map.setZoom(15);
-  }
-
-
 }
 
 exports.showJSON = function(msg, baseJSON) {
-
+  
    var json = JSON.stringify(msg, null, 2);
     baseJSON += json;
-    baseJSON += '\n';
+    baseJSON += '\n';                                                          
 
   if ($('.nav-tabs .active').text() == "JSON") {
       $('#resultsJSON').append(baseJSON);
       baseJSON = "";
       console.log("updating json");
   }
-
+  
   return baseJSON;
 }
 
@@ -1093,151 +928,10 @@ var initTextScroll = function() {
 
 function updateScroll(){
   if(!scrolled){
-  // L.R.
-  //  var element = $('.table-scroll').get(0);
-  //  element.scrollTop = element.scrollHeight;
+    var element = $('.table-scroll').get(0);
+    element.scrollTop = element.scrollHeight;
   }
 }
-
-// L.R.
-// --------------------------------- MT & TTS ----------------------------------------
-function getVoice() {
-	var mt_target = getTargetLanguageCode();
-	var voice = '';
-	if(mt_target == 'en')
-		voice = 'en-US_MichaelVoice'; // TODO: try 'en-US_AllisonVoice' or 'en-US_LisaVoice'
-	else if(mt_target == 'fr')
-		voice = 'fr-FR_ReneeVoice';
-	else if(mt_target == 'es')
-		voice = 'es-US_SofiaVoice';   // TODO: try 'es-ES_EnriqueVoice' or 'es-ES_LauraVoice'
-	else if(mt_target == 'pt')
-		voice = 'pt-BR_IsabelaVoice';
-	return voice;
-}
-
-function TTS(textToSynthesize) {
-	console.log('text to synthesize: ---> ' + textToSynthesize);
-	var voice = getVoice();
-	if(voice == '')
-		return;
-	synthesizeRequest(textToSynthesize, voice);
-}
-
-function getTargetLanguageCode() {
-	var lang = $('#dropdownMenuTargetLanguageDefault').text();
-	var mt_target = 'en'; // default
-	if( lang == 'English' )
-	    mt_target = 'en';
-	else if( lang == 'French' )
-	    mt_target = 'fr';
-	else if( lang == 'Spanish' )
-	    mt_target = 'es';
-	else if( lang == 'Portuguese' )
-	    mt_target = 'pt';
-	return mt_target;
-}
-
-
-function converse (textContent) {
-  console.log("Sending text to conversation: \'"+textContent+"\'");
-  // Build request payload
-  var payloadToWatson = {};
-  payloadToWatson.input = { text: textContent };
-  payloadToWatson.context = context;
-  console.log("meaasge payload: "+JSON.stringify(payloadToWatson));
-
-  // Built http request
-  var http = new XMLHttpRequest();
-  http.open('POST', '/message', true);
-  http.setRequestHeader('Content-type', 'application/json');
-  http.onreadystatechange = function() {
-    if (http.readyState === 4 && http.status === 200 && http.responseText) {
-      console.log ('response='+http.responseText);
-      var data =  JSON.parse(http.responseText);
-      context = data.context; // store for future calls
-      $('#response textarea').val(data.output.text);
-      TTS(data.output.text);
-    }
-  };
-
-  // Send request
-  var params = JSON.stringify(payloadToWatson);
-  http.send(params);
-}
-
-
-var ttsAudio = $('.audio-tts').get(0);
-
-
-// interpret typing enter in resultsText as an intention to submit
-$('#resultsText').keydown(function(event) {
-  // enter has keyCode = 13, change it if you want to use another button
-  if (event.keyCode == 13) {
-    $('#playTTS').click();
-    return false;
-  }
-});
-
-$('#playTTS').click(function() {
-  var textContent = $('#resultsText').val();
-  // ToDo indicate the confidence of the transcriotion e.g.
-  $('#response textarea').val('');
-  converse(textContent);
-});
-
-$('#stopTTS').click(function() {
-	ttsAudio.pause();
-});
-
-window.ttsChunks = new Array();
-window.ttsChunksIndex = 0;
-window.inputSpeechOn = false;
-
-var timerStarted = false;
-var timerID;
-
-var playTTSChunk = function() {
-	if(ttsChunksIndex >= ttsChunks.length)
-		return;
-
-	var downloadURL = ttsChunks[ttsChunksIndex];
-	ttsChunksIndex = ttsChunksIndex + 1;
-
-	ttsAudio.src = downloadURL;
-	ttsAudio.load();
-	ttsAudio.play();
-}
-
-ttsAudio.addEventListener('ended', playTTSChunk);
-
-function playTTSifInputSpeechIsOff() {
-	clearTimeout(timerID);
-	var streaming = $('#microphone_streaming').prop('checked');
-
-	if(streaming== false && inputSpeechOn == true || ttsAudio.paused == false) {
-		timerID = setTimeout(playTTSifInputSpeechIsOff, 100);
-		timerStarted = true;
-	}
-	else {
-		timerStarted = false;
-		playTTSChunk();
-	}
-}
-
-function synthesizeRequest(text, v) {
-	var downloadURL = '/synthesize' +
-	  '?voice=' + v +
-	  '&text=' + encodeURIComponent(text);
-
-	ttsChunks.push(downloadURL);
-
-	if(timerStarted == false) {
-		timerID = setTimeout(playTTSifInputSpeechIsOff, 300);
-		timerStarted = true;
-	}
-}
-
-// ------------------------------------------------------------------------------------
 
 var initScroll = function() {
   $('.table-scroll').on('scroll', function(){
@@ -1260,10 +954,7 @@ exports.showResult = function(msg, baseString, callback) {
     var alternatives = msg.results[0].alternatives;
     var text = msg.results[0].alternatives[0].transcript || '';
 
-	// L.R.
-	// console.log('transcription: ---> ' + text);
-
-    // Capitalize first word
+    //Capitalize first word
     // if final results, append a new paragraph
     if (msg.results && msg.results[0] && msg.results[0].final) {
       baseString += text;
@@ -1271,19 +962,10 @@ exports.showResult = function(msg, baseString, callback) {
       displayFinalString = displayFinalString.replace(/%HESITATION\s/g, '');
       displayFinalString = displayFinalString.replace(/(.)\1{2,}/g, '');
       processString(displayFinalString, true);
-
-  	  // HACK to ignore nn, nnn, nnnn sequences !!!
-      // ToDo figure out is we should skip this test and always send
-  	  console.log('---> recognised=' + text);
-      console.log('---> confidence='+ (100*msg.results[0].alternatives[0].confidence) + '%');
-  	  var res = text.match("([n]{2,} )");
-  	  if(res == null) {
-  		    converse(text);
-  	  } else {
-  		    console.log('---> conversation step is skipped for text=' + text);
-  	  }
-    }
-	else {
+      showMetaData(alternatives[0]);
+      // Only show alternatives if we're final
+      alternativePrototype.showAlternatives(alternatives);
+    } else {
       var tempString = baseString + text;
       tempString = tempString.replace(/%HESITATION\s/g, '');
       tempString = tempString.replace(/(.)\1{2,}/g, '');
@@ -1394,7 +1076,7 @@ var utils = require('../utils');
 var handleSelectedFile = exports.handleSelectedFile = (function() {
 
     var running = false;
-	localStorage.setItem('currentlyDisplaying', false);
+    localStorage.setItem('currentlyDisplaying', false);
 
     return function(token, file) {
 
@@ -1406,12 +1088,6 @@ var handleSelectedFile = exports.handleSelectedFile = (function() {
     // }
 
     $.publish('clearscreen');
-	$('#response textarea').val('');     	 // L.R.
-	ttsChunks.length = 0;						 // L.R.
-	var ttsAudio = $('.audio-tts').get(0);		 // L.R.
-	ttsAudio.pause();							 // L.R.
-	inputSpeechOn = true;						 // L.R.
-	ttsChunksIndex = 0;							 // L.R.
 
     localStorage.setItem('currentlyDisplaying', true);
     running = true;
@@ -1477,14 +1153,12 @@ var handleSelectedFile = exports.handleSelectedFile = (function() {
           function(evt) {
             console.log('Error reading file: ', evt.message);
             showError('Error: ' + evt.message);
-			inputSpeechOn = false;					 // L.R.
           },
           // On load end
           function() {
             socket.send(JSON.stringify({'action': 'stop'}));
-			inputSpeechOn = false;					 // L.R.
           });
-      },
+      }, 
         function(evt) {
           effects.stopToggleImage(timer, uploadImageTag, 'upload');
           uploadText.text('Select File');
@@ -1564,14 +1238,12 @@ var effects = require('./effects');
 
 
 var LOOKUP_TABLE = {
-  'ar-AR_BroadbandModel': ['ar-AR_Broadband_sample1.wav', 'ar-AR_Broadband_sample2.wav'],
-  'en-US_BroadbandModel': ['Us_English_Broadband_Sample_1.wav', 'turn-on-the-wipers.wav' /*'Us_English_Broadband_Sample_2.wav' */],
-  'en-US_NarrowbandModel': ['Us_English_Narrowband_Sample_1.wav', 'turn-on-the-wipers.wav' /*'Us_English_Narrowband_Sample_2.wav' */],
+  'en-US_BroadbandModel': ['Us_English_Broadband_Sample_1.wav', 'Us_English_Broadband_Sample_2.wav'],
+  'en-US_NarrowbandModel': ['Us_English_Narrowband_Sample_1.wav', 'Us_English_Narrowband_Sample_2.wav'],
   'es-ES_BroadbandModel': ['Es_ES_spk24_16khz.wav', 'Es_ES_spk19_16khz.wav'],
   'es-ES_NarrowbandModel': ['Es_ES_spk24_8khz.wav', 'Es_ES_spk19_8khz.wav'],
   'ja-JP_BroadbandModel': ['sample-Ja_JP-wide1.wav', 'sample-Ja_JP-wide2.wav'],
-  'ja-JP_NarrowbandModel': ['sample-Ja_JP-narrow3.wav', 'sample-Ja_JP-narrow4.wav'],
-  'pt-BR_BroadbandModel': ['pt-BR_Sample1-16KHz.wav', 'pt-BR_Sample2-16KHz.wav']
+  'ja-JP_NarrowbandModel': ['sample-Ja_JP-narrow3.wav', 'sample-Ja_JP-narrow4.wav']
 };
 
 var playSample = (function() {
@@ -1580,12 +1252,6 @@ var playSample = (function() {
   localStorage.setItem('currentlyDisplaying', false);
 
   return function(token, imageTag, iconName, url, callback) {
-	$('#response textarea').val('');     	 // L.R.
-	ttsChunks.length = 0;						 // L.R.
-	var ttsAudio = $('.audio-tts').get(0);		 // L.R.
-	ttsAudio.pause();							 // L.R.
-	inputSpeechOn = true;						 // L.R.
-	ttsChunksIndex = 0;							 // L.R.
 
     $.publish('clearscreen');
 
@@ -1657,13 +1323,12 @@ var playSample = (function() {
             function() {
               socket.send(JSON.stringify({'action': 'stop'}));
             });
-        },
+        }, 
         // On connection end
           function(evt) {
             effects.stopToggleImage(timer, imageTag, iconName);
             effects.restoreImage(imageTag, iconName);
             localStorage.getItem('currentlyDisplaying', false);
-			inputSpeechOn = false; // L.R.
           }
         );
       };
@@ -1676,7 +1341,7 @@ var playSample = (function() {
 exports.initPlaySample = function(ctx) {
 
   (function() {
-    var fileName = 'audio/turn-on-the-wipers.wav';
+    var fileName = 'audio/' + LOOKUP_TABLE[ctx.currentModel][0];
     var el = $('.play-sample-1');
     el.off('click');
     var iconName = 'play';
@@ -1689,34 +1354,8 @@ exports.initPlaySample = function(ctx) {
   })(ctx, LOOKUP_TABLE);
 
   (function() {
-    var fileName = 'audio/play-music.wav';
+    var fileName = 'audio/' + LOOKUP_TABLE[ctx.currentModel][1];
     var el = $('.play-sample-2');
-    el.off('click');
-    var iconName = 'play';
-    var imageTag = el.find('img');
-    el.click( function(evt) {
-      playSample(ctx.token, imageTag, iconName, fileName, function(result) {
-        console.log('Play sample result', result);
-      });
-    });
-  })(ctx, LOOKUP_TABLE);
-
-  (function() {
-    var fileName = 'audio/jazz.wav';
-    var el = $('.play-sample-3');
-    el.off('click');
-    var iconName = 'play';
-    var imageTag = el.find('img');
-    el.click( function(evt) {
-      playSample(ctx.token, imageTag, iconName, fileName, function(result) {
-        console.log('Play sample result', result);
-      });
-    });
-  })(ctx, LOOKUP_TABLE);
-
-  (function() {
-    var fileName = 'audio/rock.wav';
-    var el = $('.play-sample-4');
     el.off('click');
     var iconName = 'play';
     var imageTag = el.find('img');
@@ -1742,6 +1381,7 @@ exports.initRecordButton = function(ctx) {
   var recordButton = $('#recordButton');
 
   recordButton.click((function() {
+
     var running = false;
     var token = ctx.token;
     var micOptions = {
@@ -1769,30 +1409,21 @@ exports.initRecordButton = function(ctx) {
             console.log(msg);
             showError(msg);
             running = false;
-			inputSpeechOn = false;						 // L.R.
           } else {
             recordButton.css('background-color', '#d74108');
             recordButton.find('img').attr('src', 'images/stop.svg');
             console.log('starting mic');
             mic.record();
             running = true;
-			$('#response textarea').val('');     	 // L.R.
-			ttsChunks.length = 0;						 // L.R.
-			var ttsAudio = $('.audio-tts').get(0);		 // L.R.
-			ttsAudio.pause();							 // L.R.
-			inputSpeechOn = true;						 // L.R.
-			ttsChunksIndex = 0;							 // L.R.
           }
         });
-      }
-	  else {
+      } else {
         console.log('Stopping microphone, sending stop action message');
         recordButton.removeAttr('style');
         recordButton.find('img').attr('src', 'images/microphone.svg');
         $.publish('hardsocketstop');
         mic.stop();
         running = false;
-		inputSpeechOn = false;						 	 // L.R.
       }
     }
   })());
@@ -1820,27 +1451,6 @@ exports.initSelectModel = function(ctx) {
       )
   });
 
-  function onChooseTargetLanguageClick() {
-  	var currentModel = localStorage.getItem('currentModel') || 'en-US_BroadbandModel';
-	var list = $("#dropdownMenuTargetLanguage");
-	list.empty();
-	if(currentModel == 'en-US_BroadbandModel') {
-		list.append("<li role='presentation'><a role='menuitem' tabindex='0'>French</a></li>");
-		list.append("<li role='presentation'><a role='menuitem' tabindex='1'>Portuguese</a></li>");
-		list.append("<li role='presentation'><a role='menuitem' tabindex='2'>Spanish</a></li>");
-	}
-	else if(currentModel == 'ar-AR_BroadbandModel') {
-		list.append("<li role='presentation'><a role='menuitem' tabindex='0'>English</a></li>");
-	}
-	else if(currentModel == 'es-ES_BroadbandModel') {
-		list.append("<li role='presentation'><a role='menuitem' tabindex='0'>English</a></li>");
-	}
-	else if(currentModel == 'pt-BR_BroadbandModel') {
-		list.append("<li role='presentation'><a role='menuitem' tabindex='0'>English</a></li>");
-	}
-
-  }
-
   $("#dropdownMenuList").click(function(evt) {
     evt.preventDefault();
     evt.stopPropagation();
@@ -1848,42 +1458,11 @@ exports.initSelectModel = function(ctx) {
     var newModelDescription = $(evt.target).text();
     var newModel = $(evt.target).data('model');
     $('#dropdownMenuDefault').empty().text(newModelDescription);
-	$('#dropdownMenuTargetLanguageDefault').text("Choose Target Language");
-	$("#dropdownMenuTargetLanguage").empty();
     $('#dropdownMenu1').dropdown('toggle');
     localStorage.setItem('currentModel', newModel);
-
-	// HACK: just for now because these 3 source languages have only 1 target language, which is English
-	if( newModel == "ar-AR_BroadbandModel" ||
-		newModel == "pt-BR_BroadbandModel" ||
-		newModel == "es-ES_BroadbandModel") {
-		$('#dropdownMenuTargetLanguageDefault').text("English");
-	}
-
     ctx.currentModel = newModel;
     initPlaySample(ctx);
     $.publish('clearscreen');
-  });
-
-  $("#dropdownMenuInput").click(function(evt) {
-	onChooseTargetLanguageClick();
-  });
-
-  $("#dropdownMenuTargetLanguageDefault").click(function(evt) {
-	onChooseTargetLanguageClick();
-  });
-
-  function isSelectedlanguageValid(lang) {
-	if(lang == "English" || lang == "French" || lang == "Spanish" || lang == "Portuguese")
-		return true;
-	return false;
-  }
-
-  $("#dropdownMenuTargetLanguage").click(function(evt) {
-    var lang = $(evt.target).text();
-	if(isSelectedlanguageValid(lang) == false) return;
-	$('#dropdownMenuTargetLanguageDefault').text(lang);
-    console.log('Changed target language to ', lang);
   });
 
 }

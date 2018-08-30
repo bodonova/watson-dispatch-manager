@@ -80,12 +80,12 @@ var authorization = watson.authorization(stt_credentials);
 console.log('stt_credentials:', stt_credentials);
 
 // Get customisation ID
-app.get('/customisation_id', function(req, res) {
-  if (customisation_id) {
-      console.log ("Getting customisation_id="+customisation_id);
-      res.send(customisation_id);
+app.get('/customization_id', function(req, res) {
+  if (customization_id) {
+      console.log ("Getting customization_id="+customization_id);
+      res.send(customization_id);
   } else {
-      console.log ("No customisation_id to return");
+      console.log ("No customization_id to return");
       res.send("");               
   }
 });
