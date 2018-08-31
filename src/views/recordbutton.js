@@ -1,6 +1,7 @@
 
 'use strict';
 
+const $ = require('jquery');
 var Microphone = require('../Microphone');
 var handleMicrophone = require('../handlemicrophone').handleMicrophone;
 var showError = require('./showerror').showError;
@@ -39,12 +40,20 @@ exports.initRecordButton = function(ctx) {
             console.log(msg);
             showError(msg);
             running = false;
+			         inputSpeechOn = false;						 // L.R.
+
           } else {
             recordButton.css('background-color', '#d74108');
             recordButton.find('img').attr('src', 'images/stop.svg');
             console.log('starting mic');
             mic.record();
             running = true;
+      			$('#response textarea').val('');     	 // L.R.
+      			ttsChunks.length = 0;						 // L.R.
+      			var ttsAudio = $('.audio-tts').get(0);		 // L.R.
+      			ttsAudio.pause();							 // L.R.
+      			inputSpeechOn = true;						 // L.R.
+      			ttsChunksIndex = 0;							 // L.R.
           }
         });
       } else {
@@ -54,6 +63,7 @@ exports.initRecordButton = function(ctx) {
         $.publish('hardsocketstop');
         mic.stop();
         running = false;
+		      inputSpeechOn = false;						 	 // L.R.
       }
     }
   })());

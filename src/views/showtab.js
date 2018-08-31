@@ -1,6 +1,7 @@
 
 'use strict';
 
+const $ = require('jquery');
 exports.initShowTab = function() {
 
   $('.nav-tabs a[data-toggle="tab"]').on('shown.bs.tab', function (e) {

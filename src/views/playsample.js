@@ -1,6 +1,7 @@
 
 'use strict';
 
+const $ = require('jquery');
 var utils = require('../utils');
 var onFileProgress = utils.onFileProgress;
 var handleFileUpload = require('../handlefileupload').handleFileUpload;
@@ -10,12 +11,16 @@ var effects = require('./effects');
 
 
 var LOOKUP_TABLE = {
-  'en-US_BroadbandModel': ['Us_English_Broadband_Sample_1.wav', 'Us_English_Broadband_Sample_2.wav'],
-  'en-US_NarrowbandModel': ['Us_English_Narrowband_Sample_1.wav', 'Us_English_Narrowband_Sample_2.wav'],
+  'ar-AR_BroadbandModel': ['ar-AR_Broadband_sample1.wav', 'ar-AR_Broadband_sample2.wav'],
+  'en-US_BroadbandModel': ['Us_English_Broadband_Sample_1.wav', 'turn-on-the-wipers.wav' /*'Us_English_Broadband_Sample_2.wav' */],
+  'en-US_NarrowbandModel': ['Us_English_Narrowband_Sample_1.wav', 'turn-on-the-wipers.wav' /*'Us_English_Narrowband_Sample_2.wav' */],
+//  'en-US_BroadbandModel': ['Us_English_Broadband_Sample_1.wav', 'Us_English_Broadband_Sample_2.wav'],
+//  'en-US_NarrowbandModel': ['Us_English_Narrowband_Sample_1.wav', 'Us_English_Narrowband_Sample_2.wav'],
   'es-ES_BroadbandModel': ['Es_ES_spk24_16khz.wav', 'Es_ES_spk19_16khz.wav'],
   'es-ES_NarrowbandModel': ['Es_ES_spk24_8khz.wav', 'Es_ES_spk19_8khz.wav'],
   'ja-JP_BroadbandModel': ['sample-Ja_JP-wide1.wav', 'sample-Ja_JP-wide2.wav'],
-  'ja-JP_NarrowbandModel': ['sample-Ja_JP-narrow3.wav', 'sample-Ja_JP-narrow4.wav']
+  'ja-JP_NarrowbandModel': ['sample-Ja_JP-narrow3.wav', 'sample-Ja_JP-narrow4.wav'],
+  'pt-BR_BroadbandModel': ['pt-BR_Sample1-16KHz.wav', 'pt-BR_Sample2-16KHz.wav']
 };
 
 var playSample = (function() {
@@ -24,6 +29,13 @@ var playSample = (function() {
   localStorage.setItem('currentlyDisplaying', false);
 
   return function(token, imageTag, iconName, url, callback) {
+  	$('#response textarea').val('');     	 // L.R.
+  	ttsChunks.length = 0;						 // L.R.
+  	var ttsAudio = $('.audio-tts').get(0);		 // L.R.
+  	ttsAudio.pause();							 // L.R.
+  	inputSpeechOn = true;						 // L.R.
+  	ttsChunksIndex = 0;							 // L.R.
+
 
     $.publish('clearscreen');
 
@@ -95,12 +107,13 @@ var playSample = (function() {
             function() {
               socket.send(JSON.stringify({'action': 'stop'}));
             });
-        }, 
+        },
         // On connection end
           function(evt) {
             effects.stopToggleImage(timer, imageTag, iconName);
             effects.restoreImage(imageTag, iconName);
             localStorage.getItem('currentlyDisplaying', false);
+			           inputSpeechOn = false; // L.R.
           }
         );
       };
@@ -113,7 +126,8 @@ var playSample = (function() {
 exports.initPlaySample = function(ctx) {
 
   (function() {
-    var fileName = 'audio/' + LOOKUP_TABLE[ctx.currentModel][0];
+    var fileName = 'audio/turn-on-the-wipers.wav';
+    // var fileName = 'audio/' + LOOKUP_TABLE[ctx.currentModel][0];
     var el = $('.play-sample-1');
     el.off('click');
     var iconName = 'play';
@@ -126,7 +140,8 @@ exports.initPlaySample = function(ctx) {
   })(ctx, LOOKUP_TABLE);
 
   (function() {
-    var fileName = 'audio/' + LOOKUP_TABLE[ctx.currentModel][1];
+    var fileName = 'audio/play-music.wav';
+    // var fileName = 'audio/' + LOOKUP_TABLE[ctx.currentModel][1];
     var el = $('.play-sample-2');
     el.off('click');
     var iconName = 'play';
@@ -137,5 +152,19 @@ exports.initPlaySample = function(ctx) {
       });
     });
   })(ctx, LOOKUP_TABLE);
+
+  (function() {
+    var fileName = 'audio/jazz.wav';
+    var el = $('.play-sample-3');
+    el.off('click');
+    var iconName = 'play';
+    var imageTag = el.find('img');
+    el.click( function(evt) {
+      playSample(ctx.token, imageTag, iconName, fileName, function(result) {
+        console.log('Play sample result', result);
+      });
+    });
+  })(ctx, LOOKUP_TABLE);
+
 
 };

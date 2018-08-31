@@ -17,7 +17,17 @@
 
 'use strict';
 
-var Microphone = require('./Microphone');
+
+// a global context variable so we remember it between calls
+var context = {};
+
+const $ = require('jquery');
+
+const GoogleMap = require('./GoogleMap');
+const googleMap = new(GoogleMap);
+window.initMap = googleMap.initMap;
+window.map = googleMap.map;
+
 var models = require('./data/models.json').models;
 var utils = require('./utils');
 utils.initPubSub();
@@ -67,4 +77,32 @@ $(document).ready(function() {
 
   });
 
+  console.log ("Initializing the conversation service");
+  conv_init();
+
 });
+
+
+function conv_init () {
+  console.log("Initialising conversation");
+  // Build request payload
+  var payloadToWatson = {"text": " " , "context": {} };
+  console.log("meaasge payload: "+JSON.stringify(payloadToWatson));
+
+  // Built http request
+  var http = new XMLHttpRequest();
+  http.open('POST', '/message', true);
+  http.setRequestHeader('Content-type', 'application/json');
+  http.onreadystatechange = function() {
+    if (http.readyState === 4 && http.status === 200 && http.responseText) {
+      console.log ('response='+http.responseText);
+      var data =  JSON.parse(http.responseText);
+      window.context = data.context; // store for future calls
+      $('#response textarea').val(data.output.text);
+    }
+  };
+
+  // Send request
+  var params = JSON.stringify(payloadToWatson);
+  http.send(params);
+}

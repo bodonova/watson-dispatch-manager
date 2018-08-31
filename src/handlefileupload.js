@@ -1,10 +1,13 @@
 
+const $ = require('jquery');
 var effects = require('./views/effects');
 var display = require('./views/displaymetadata');
 var hideError = require('./views/showerror').hideError;
 var initSocket = require('./socket').initSocket;
 
 exports.handleFileUpload = function(token, model, file, contentType, callback, onend) {
+
+    console.log ('Loading file '+file);
 
     // Set currentlyDisplaying to prevent other sockets from opening
     localStorage.setItem('currentlyDisplaying', true);
