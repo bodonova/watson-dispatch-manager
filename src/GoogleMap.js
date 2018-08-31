@@ -32,53 +32,53 @@ GoogleMap.prototype.initMap = function() {
 
   var clontarf1 = new google.maps.Marker({
     position: clontarf1,
-    map: map,
+    map: this.map,
     title: 'Fire reported on Kincoard Rd from this location. Small children needing to be rescued from the third house.',
     icon : './images/fire.png'
   });
   var clontarf2 = new google.maps.Marker({
     position: clontarf2,
-    map: map,
+    map: this.map,
     title: 'Fire reported on Kincoard Rd from this location.'
   });
   var clontarf3 = new google.maps.Marker({
     position: clontarf3,
-    map: map,
+    map: this.map,
     title: 'Fire reported on Kincoard Rd from this location.'
   });
   var sandymount2 = new google.maps.Marker({
     position: sandymount2,
-    map: map,
+    map: this.map,
     title: 'Flood reported in Sandymount area from this location. High risk of flooding due to a breach in the sea wall at Strand road'
   });
   var sandymount3 = new google.maps.Marker({
     position: sandymount3,
-    map: map,
+    map: this.map,
     title: 'Flood reported in Sandymount area from this location. High risk of flooding due to a breach in the sea wall at Strand road'
   });
   var sandymount4 = new google.maps.Marker({
     position: sandymount4,
-    map: map,
+    map: this.map,
     title: 'Flood reported in Sandymount area from this location. High risk of flooding due to a breach in the sea wall at Strand road'
   });
   var sandymount5 = new google.maps.Marker({
     position: sandymount5,
-    map: map,
+    map: this.map,
     title: 'Flood reported in Sandymount area from this location. High risk of flooding due to a breach in the sea wall at Strand road'
   });
   var sandymount5 = new google.maps.Marker({
     position: sandymount5,
-    map: map,
+    map: this.map,
     title: 'Flood reported in Sandymount area from this location. High risk of flooding due to a breach in the sea wall at Strand road'
   });
   var sandymount6 = new google.maps.Marker({
     position: sandymount6,
-    map: map,
+    map: this.map,
     title: 'Flood reported in Sandymount area from this location. High risk of flooding due to a breach in the sea wall at Strand road'
   });
   var sandymount7 = new google.maps.Marker({
     position: sandymount7,
-    map: map,
+    map: this.map,
     title: 'Flood reported in Sandymount area from this location. High risk of flooding due to a breach in the sea wall at Strand road'
   });
 
@@ -92,14 +92,14 @@ GoogleMap.prototype.initMap = function() {
     content: document.getElementById('message')
   });
 
-  google.maps.event.addListener(map, 'click', function(event) {
-    marker = new google.maps.Marker({
+  google.maps.event.addListener(this.map, 'click', function(event) {
+    this.marker = new google.maps.Marker({
       position: event.latLng,
-      map: map
+      map: this.map
     });
 
-    google.maps.event.addListener(marker, 'click', function() {
-      infowindow.open(map, marker);
+    google.maps.event.addListener(this.marker, 'click', function() {
+      infowindow.open(this.map, this.marker);
       document.getElementById('form').style.display = "block";
     });
   });
