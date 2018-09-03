@@ -18,6 +18,15 @@
     var sandymount6 = {lat: 53.329496, lng:-6.210213 };
     var sandymount7 = {lat: 53.329433, lng:-6.210123 };
 
+    var limerick1 = {lat: 52.6604 , lng:-8.6373};
+    var limerick2 = {lat: 52.6614 , lng:-8.6473};
+    var limerick3 = {lat: 52.6654 , lng:-8.6343};
+    var limerick4 = {lat: 52.6674 , lng:-8.6273};
+    var limerick5 = {lat: 52.6704 , lng:-8.6853};
+    var limerick6 = {lat: 52.6504 , lng:-8.6678};
+
+    var blanchardstown1 = {lat:53.3932, lng:- 6.3892}
+
 		map = new google.maps.Map(document.getElementById('map'), {
 			center: ireland,
       zoom: 6
@@ -32,50 +41,102 @@
     var clontarf2 = new google.maps.Marker({
       position: clontarf2,
       map: map,
-      title: 'Fire reported on Kincoard Rd from this location.'
+      title: 'Fire reported on Kincoard Rd from this location.',
+      icon : './images/fire.png'
     });
     var clontarf3 = new google.maps.Marker({
       position: clontarf3,
       map: map,
-      title: 'Fire reported on Kincoard Rd from this location.'
+      title: 'Fire reported on Kincoard Rd from this location.',
+      icon : './images/fire.png'
     });
     var sandymount2 = new google.maps.Marker({
       position: sandymount2,
       map: map,
-      title: 'Flood reported in Sandymount area from this location. High risk of flooding due to a breach in the sea wall at Strand road'
+      title: 'Flood reported in Sandymount area from this location. High risk of flooding due to a breach in the sea wall at Strand road',
+      icon : './images/water.png'
     });
     var sandymount3 = new google.maps.Marker({
       position: sandymount3,
       map: map,
-      title: 'Flood reported in Sandymount area from this location. High risk of flooding due to a breach in the sea wall at Strand road'
+      title: 'Flood reported in Sandymount area from this location. High risk of flooding due to a breach in the sea wall at Strand road',
+      icon : './images/water.png'
     });
     var sandymount4 = new google.maps.Marker({
       position: sandymount4,
       map: map,
-      title: 'Flood reported in Sandymount area from this location. High risk of flooding due to a breach in the sea wall at Strand road'
+      title: 'Flood reported in Sandymount area from this location. High risk of flooding due to a breach in the sea wall at Strand road',
+      icon : './images/water.png'
     });
     var sandymount5 = new google.maps.Marker({
       position: sandymount5,
       map: map,
-      title: 'Flood reported in Sandymount area from this location. High risk of flooding due to a breach in the sea wall at Strand road'
+      title: 'Flood reported in Sandymount area from this location. High risk of flooding due to a breach in the sea wall at Strand road',
+      icon : './images/water.png'
     });
     var sandymount5 = new google.maps.Marker({
       position: sandymount5,
       map: map,
-      title: 'Flood reported in Sandymount area from this location. High risk of flooding due to a breach in the sea wall at Strand road'
+      title: 'Flood reported in Sandymount area from this location. High risk of flooding due to a breach in the sea wall at Strand road',
+      icon : './images/water.png'
     });
     var sandymount6 = new google.maps.Marker({
       position: sandymount6,
       map: map,
-      title: 'Flood reported in Sandymount area from this location. High risk of flooding due to a breach in the sea wall at Strand road'
+      title: 'Flood reported in Sandymount area from this location. High risk of flooding due to a breach in the sea wall at Strand road',
+      icon : './images/water.png'
     });
     var sandymount7 = new google.maps.Marker({
       position: sandymount7,
       map: map,
-      title: 'Flood reported in Sandymount area from this location. High risk of flooding due to a breach in the sea wall at Strand road'
+      title: 'Flood reported in Sandymount area from this location. High risk of flooding due to a breach in the sea wall at Strand road',
+      icon : './images/water.png'
     });
 
+    var limerick1 = new google.maps.Marker({
+      position: limerick1,
+      map: map,
+      title: 'Flood reported in Bishops Quay area from this location. Several cars and businesses in danger.',
+      icon : './images/water.png'
+    });
+    var limerick2 = new google.maps.Marker({
+      position: limerick2,
+      map: map,
+      title: 'Two children trapped in house here. Flood water rising. Rapid dispatch.',
+      icon : './images/water.png'
+    });
+    var limerick3 = new google.maps.Marker({
+      position: limerick3,
+      map: map,
+      title: 'Elderly man trapped in house. Rapid dispatch required.',
+      icon : './images/water.png'
+    });
+    var limerick4 = new google.maps.Marker({
+      position: limerick4,
+      map: map,
+      title: 'Cars being swept away in this area.',
+      icon : './images/water.png'
+    });
+    var limerick5 = new google.maps.Marker({
+      position: limerick5,
+      map: map,
+      title: 'Received call from elderly farmer concerned for his livestock. ',
+      icon : './images/water.png'
+    });
 
+    var limerick6 = new google.maps.Marker({
+      position: limerick6,
+      map: map,
+      title: 'Flood reported in Bishops Quay area from this location. Several cars and businesses in danger.',
+      icon : './images/water.png'
+    });
+
+    var blanchardstown1 = new google.maps.Marker({
+      position: blanchardstown1,
+      map: map,
+      title: 'Received reports of a woman collapsing in the shopping centre. Ambulance has been dispatched.',
+      icon : './images/injury.png'
+    });
 
 
 		infowindow = new google.maps.InfoWindow({
@@ -98,7 +159,20 @@
         document.getElementById('form').style.display = "block";
 			});
 		});
-	}
+  }
+  
+  function toggleMe(a){
+    var e=document.getElementById(a);
+    if(!e)return true;
+    if(e.style.display=="none"){
+    e.style.display="block"
+    }
+    else{
+    e.style.display="none"
+    }
+    return true;
+  }
+
 
 	function saveData() {
 		var name = escape(document.getElementById('name').value);
@@ -662,11 +736,11 @@ $(document).ready(function() {
       console.error('No authorization token available');
       console.error('Attempting to reconnect...');
     }
-
+    
 //    utils.getCustomizationID(function(customization_id) {
 //        console.log('Fetched customization_id', customization_id);
 //    });
-
+      
     var viewContext = {
       currentModel: 'en-US_BroadbandModel',
       models: models,
@@ -732,17 +806,6 @@ var hideError = showerror.hideError;
 // Initialize closure, which holds maximum getToken call count
 var tokenGenerator = utils.createTokenGenerator();
 
-console.log('Checking customization_id');
-var customization_id=null
-var url = '/customization_id';
-var customizationRequest = new XMLHttpRequest();
-customizationRequest.open("GET", url, true);
-customizationRequest.onload = function(evt) {
-  customization_id = customizationRequest.responseText;
-  console.log('customization_id:', customization_id)
-};
-customizationRequest.send();
-
 var initSocket = exports.initSocket = function(options, onopen, onlistening, onmessage, onerror, onclose) {
   var listening;
   function withDefault(val, defaultVal) {
@@ -751,7 +814,7 @@ var initSocket = exports.initSocket = function(options, onopen, onlistening, onm
   var socket;
   var token = options.token;
   var model = options.model || localStorage.getItem('currentModel');
-  console.log('Initalizing STT with customization_id:', customization_id)
+  var customization_id='13f71759-ce84-4e69-8129-3a73b44e0969' // TODO hardcode for now, but read froim config eventually
   var message = options.message || {'action': 'start'};
   var sessionPermissions = withDefault(options.sessionPermissions, JSON.parse(localStorage.getItem('sessionPermissions')));
   var sessionPermissionsQueryParam = sessionPermissions ? '0' : '1';
@@ -759,7 +822,7 @@ var initSocket = exports.initSocket = function(options, onopen, onlistening, onm
     + token + '&model=' + model;
   if (customization_id)
     url +=  '&customization_id=' + customization_id;
-  console.log('STT WS URL', url);
+  console.log('URL', url);
   try {
     socket = new WebSocket(url);
   } catch(err) {
@@ -1045,6 +1108,22 @@ var Alternatives = function(){
 
 var alternativePrototype = new Alternatives();
 
+function codeAddress( address ) {
+  var geocoder= new google.maps.Geocoder();
+  geocoder.geocode( { 'address': address}, function(results, status) {
+    if (status == 'OK') {
+      map.setZoom(15);
+      map.setCenter(results[0].geometry.location);
+      var marker = new google.maps.Marker({
+          map: map,
+          position: results[0].geometry.location
+      });
+    } else {
+      alert('Geocode was not successful for the following reason: ' + status);
+    }
+  });
+}
+
 // TODO: Convert to closure approach
 var processString = function(baseString, isFinished) {
 
@@ -1056,22 +1135,6 @@ var processString = function(baseString, isFinished) {
   } else {
     $('#resultsText').val(baseString);
   }
-
-
-  if(baseString.indexOf("flood") >= 0){
-    document.getElementById("match_flood").style.display = 'block';
-    map.setCenter(new google.maps.LatLng(53.329633, -6.210746))
-    map.setZoom(15);
-  }
-
-
-  if(baseString.indexOf("fire") >= 0){
-    document.getElementById("match_fire").style.display = 'block';
-    map.setCenter(new google.maps.LatLng(53.3606109, -6.1843204))
-    map.setZoom(15);
-  }
-
-
 }
 
 exports.showJSON = function(msg, baseJSON) {
@@ -1168,12 +1231,32 @@ function converse (textContent) {
       context = data.context; // store for future calls
       $('#response textarea').val(data.output.text);
       TTS(data.output.text);
+      
+      
+      var genericLocation = context.location;
+      var customLocation = context.location2;
+      if(customLocation){
+        if (customLocation.indexOf("Kincora") >= 0){
+          document.getElementById("match_fire").style.display = 'block';
+          window.map.setCenter(new google.maps.LatLng(53.3606109,-6.1834204))
+          window.map.setZoom(15);
+        }
+        if (customLocation.indexOf("blanchardstown") >= 0){
+          document.getElementById("match_ambulance").style.display = 'block';
+          window.map.setCenter(new google.maps.LatLng(53.3933, -6.3894))
+          window.map.setZoom(15);
+        }
+
+      }else if(genericLocation){
+        codeAddress(genericLocation);
+      }
     }
   };
 
   // Send request
   var params = JSON.stringify(payloadToWatson);
   http.send(params);
+
 }
 
 
@@ -1183,6 +1266,14 @@ var ttsAudio = $('.audio-tts').get(0);
 // interpret typing enter in resultsText as an intention to submit
 $('#resultsText').keydown(function(event) {
   // enter has keyCode = 13, change it if you want to use another button
+  var searchLocation = context.location;
+ 
+  if(searchLocation){
+   // document.getElementById("match_fire").style.display = 'block';
+   console.log("Hi Eamonn =====>>>> " + searchLocation)
+   codeAddress(searchLocation);
+  }
+
   if (event.keyCode == 13) {
     $('#playTTS').click();
     return false;
