@@ -1,7 +1,34 @@
+/* Style the button that is used to open and close the collapsible content */
+.collapsible {
+  background-color: #D21F3C;
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+}
 
-  /* body */
+/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+.collapsible:hover {
+  background-color: #04B2EF;
+}
+
+/* Style the collapsible content. Note: hidden by default */
+.content {
+  padding: 0 18px;
+  display: none;
+  overflow: hidden;
+}
+
+ 
+ 
+ /* body */
   body {
     background: rgba(24, 21, 21, 0.836);
+   /* background:#5e1914; */
     font-family: 'Open Sans', sans-serif;
   }
 
@@ -25,7 +52,6 @@
 
 .manager {
   width: 100%;
-  max-width: 1000px;
   margin: auto auto auto auto;
   padding: 0;
   background: rgba(255, 255, 255, 0.1);
@@ -38,6 +64,7 @@
 .dispatch_row ul {
   margin: 0;
   padding: 0;
+  width:100%;
 }
 
 .dispatch_row ul li {
@@ -309,7 +336,7 @@ ul.more-content li {
   }
 }
 
-.match_flood, .match_fire {
+.match_flood, .match_fire, .match_ambulance{
   display: none;
 }
 
@@ -332,10 +359,23 @@ ul.more-content li {
   cursor: pointer;
 }
 
-.main-header {
-  text-align: center;
-  z-index: 100;
+
+.main-header img {
+  float: left;
+  height: 100px;
+  margin-left:20%;
 }
+
+.main-header h1 {
+  position: relative;
+  top: 18px;
+}
+
+.help-block {
+  font-size: small;
+  color:white;
+}
+
 
 .intro-copy {
   text-align: center;
@@ -343,7 +383,7 @@ ul.more-content li {
 }
 
 .main-header h1 {
-  color: #999999;
+  color: #04B2EF;
   font-family: 'Open Sans', sans-serif;
 }
 
