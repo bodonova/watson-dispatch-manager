@@ -283,6 +283,20 @@ ttsAudio.addEventListener('ended', playTTSChunk);
 
 function playTTSifInputSpeechIsOff() {
 	clearTimeout(timerID);
+
+  console.log ('about to speak so turn off microphone');
+  var Microphone = require('./Microphone');
+  var micOptions = {
+//    bufferSize: ctx.buffersize
+    bufferSize: 1024
+  };
+  var mic = new Microphone(micOptions);
+  var recordButton = $('#recordButton');
+  recordButton.removeAttr('style');
+  recordButton.find('img').attr('src', 'images/microphone.svg');
+  $.publish('hardsocketstop');
+  mic.stop();
+
 	var streaming = $('#microphone_streaming').prop('checked');
 
 	if(streaming== false && inputSpeechOn == true || ttsAudio.paused == false) {
