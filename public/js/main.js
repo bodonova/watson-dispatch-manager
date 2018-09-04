@@ -24,8 +24,7 @@
     var limerick4 = {lat: 52.6674 , lng:-8.6273};
     var limerick5 = {lat: 52.6704 , lng:-8.6853};
     var limerick6 = {lat: 52.6504 , lng:-8.6678};
-
-    var blanchardstown1 = {lat:53.3932, lng:- 6.3892}
+    var mullhuddart1 = {lat:53.421281, lng:-6.418846}
 
 		map = new google.maps.Map(document.getElementById('map'), {
 			center: ireland,
@@ -59,37 +58,37 @@
     var sandymount3 = new google.maps.Marker({
       position: sandymount3,
       map: map,
-      title: 'Flood reported in Sandymount area from this location. High risk of flooding due to a breach in the sea wall at Strand road',
+      title: 'Water level rising. Woman called to say that there are still kids out playing despite impending flood. Army dispatched.',
       icon : './images/water.png'
     });
     var sandymount4 = new google.maps.Marker({
       position: sandymount4,
       map: map,
-      title: 'Flood reported in Sandymount area from this location. High risk of flooding due to a breach in the sea wall at Strand road',
+      title: 'Cars reported to be floating down the road in areas of Sandymount.',
       icon : './images/water.png'
     });
     var sandymount5 = new google.maps.Marker({
       position: sandymount5,
       map: map,
-      title: 'Flood reported in Sandymount area from this location. High risk of flooding due to a breach in the sea wall at Strand road',
+      title: 'Flood water entering homes. Residents need urgent evacuation.',
       icon : './images/water.png'
     });
     var sandymount5 = new google.maps.Marker({
       position: sandymount5,
       map: map,
-      title: 'Flood reported in Sandymount area from this location. High risk of flooding due to a breach in the sea wall at Strand road',
+      title: 'Looting has erupted on parts of Main St.',
       icon : './images/water.png'
     });
     var sandymount6 = new google.maps.Marker({
       position: sandymount6,
       map: map,
-      title: 'Flood reported in Sandymount area from this location. High risk of flooding due to a breach in the sea wall at Strand road',
+      title: 'More flooding reports, now going further inland.',
       icon : './images/water.png'
     });
     var sandymount7 = new google.maps.Marker({
       position: sandymount7,
       map: map,
-      title: 'Flood reported in Sandymount area from this location. High risk of flooding due to a breach in the sea wall at Strand road',
+      title: 'Animals reported to be in danger of drowning close to childrens playground in Sandymount.',
       icon : './images/water.png'
     });
 
@@ -131,10 +130,10 @@
       icon : './images/water.png'
     });
 
-    var blanchardstown1 = new google.maps.Marker({
-      position: blanchardstown1,
+    var mullhuddart1 = new google.maps.Marker({
+      position: mullhuddart1,
       map: map,
-      title: 'Received reports of a woman collapsing in the shopping centre. Ambulance has been dispatched.',
+      title: 'Man has collapsed after seeing the amazing power of IBM AI.',
       icon : './images/injury.png'
     });
 
@@ -175,20 +174,20 @@
 
 
 	function saveData() {
-		var name = escape(document.getElementById('name').value);
-		var address = escape(document.getElementById('address').value);
+		//var name = escape(document.getElementById('name').value);
+		//var address = escape(document.getElementById('address').value);
 		var type = document.getElementById('type').value;
-		var latlng = marker.getPosition();
-		var url = 'phpsqlinfo_addrow.php?name=' + name + '&address=' + address +
-							'&type=' + type + '&lat=' + latlng.lat() + '&lng=' + latlng.lng();
-
-		downloadUrl(url, function(data, responseCode) {
-
-			if (responseCode == 200 && data.length <= 1) {
-				infowindow.close();
-				messagewindow.open(map, marker);
-			}
-		});
+    console.log('TYPE------------.' + type)
+    //var latlng = marker.getPosition();
+		//var url = 'phpsqlinfo_addrow.php?name=' + name + '&address=' + address +
+    //					'&type=' + type + '&lat=' + latlng.lat() + '&lng=' + latlng.lng();
+    if(type==='flood'){
+      marker.setIcon('./images/water.png')
+    } else if (type==='fire') {
+      marker.setIcon('./images/fire.png')
+    } else if (type==='ambulance'){ 
+      marker.setIcon('./images/injury.png')
+    }
 	}
 
 	function downloadUrl(url, callback) {
@@ -1241,13 +1240,19 @@ function converse (textContent) {
           window.map.setCenter(new google.maps.LatLng(53.3606109,-6.1834204))
           window.map.setZoom(15);
         }
-        if (customLocation.indexOf("blanchardstown") >= 0){
+        if (customLocation.indexOf("Mullhuddart") >= 0){
           document.getElementById("match_ambulance").style.display = 'block';
-          window.map.setCenter(new google.maps.LatLng(53.3933, -6.3894))
+          window.map.setCenter(new google.maps.LatLng(53.421281,-6.418846))
+          window.map.setZoom(16);
+        }
+        if (customLocation.indexOf("sandymount") >= 0){
+          document.getElementById("match_flood").style.display = 'block';
+          window.map.setCenter(new google.maps.LatLng(53.329228, -6.210944))
           window.map.setZoom(15);
         }
 
-      }else if(genericLocation){
+      }
+      else if(genericLocation){
         codeAddress(genericLocation);
       }
     }
@@ -1266,13 +1271,7 @@ var ttsAudio = $('.audio-tts').get(0);
 // interpret typing enter in resultsText as an intention to submit
 $('#resultsText').keydown(function(event) {
   // enter has keyCode = 13, change it if you want to use another button
-  var searchLocation = context.location;
- 
-  if(searchLocation){
-   // document.getElementById("match_fire").style.display = 'block';
-   console.log("Hi Eamonn =====>>>> " + searchLocation)
-   codeAddress(searchLocation);
-  }
+
 
   if (event.keyCode == 13) {
     $('#playTTS').click();
