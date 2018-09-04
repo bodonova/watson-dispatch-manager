@@ -83,6 +83,21 @@ var Alternatives = function(){
 }
 
 var alternativePrototype = new Alternatives();
+function codeAddress( address ) {
+  var geocoder= new google.maps.Geocoder();
+  geocoder.geocode( { 'address': address}, function(results, status) {
+    if (status == 'OK') {
+      window.map.setZoom(15);
+      window.map.setCenter(results[0].geometry.location);
+      var marker = new google.maps.Marker({
+          map: map,
+          position: results[0].geometry.location
+      });
+    } else {
+      alert('Geocode was not successful for the following reason: ' + status);
+    }
+  });
+}
 
 // TODO: Convert to closure approach
 var processString = function(baseString, isFinished) {
@@ -95,22 +110,6 @@ var processString = function(baseString, isFinished) {
   } else {
     $('#resultsText').val(baseString);
   }
-
-
-  if(baseString.indexOf("flood") >= 0){
-    document.getElementById("match_flood").style.display = 'block';
-    map.setCenter(new google.maps.LatLng(53.329633, -6.210746))
-    map.setZoom(15);
-  }
-
-
-  if(baseString.indexOf("fire") >= 0){
-    document.getElementById("match_fire").style.display = 'block';
-    map.setCenter(new google.maps.LatLng(53.3606109, -6.1843204))
-    map.setZoom(15);
-  }
-
-
 }
 
 exports.showJSON = function(msg, baseJSON) {
@@ -126,27 +125,6 @@ exports.showJSON = function(msg, baseJSON) {
   }
 
   return baseJSON;
-}
-
-function updateTextScroll(){
-  if(!scrolled){
-    var element = $('#resultsText').get(0);
-    element.scrollTop = element.scrollHeight;
-  }
-}
-
-var initTextScroll = function() {
-  $('#resultsText').on('scroll', function(){
-      textScrolled = true;
-  });
-}
-
-function updateScroll(){
-  if(!scrolled){
-  // L.R.
-  //  var element = $('.table-scroll').get(0);
-  //  element.scrollTop = element.scrollHeight;
-  }
 }
 
 function updateTextScroll(){
@@ -228,6 +206,23 @@ function converse (textContent) {
       window.context = data.context; // store for future calls
       $('#response textarea').val(data.output.text);
       TTS(data.output.text);
+
+      var genericLocation = context.location;
+      var customLocation = context.location2;
+      if(customLocation){
+        if (customLocation.indexOf("Kincora") >= 0){
+          document.getElementById("match_fire").style.display = 'block';
+          window.map.setCenter(new google.maps.LatLng(53.3606109,-6.1834204))
+          window.map.setZoom(15);
+        }
+        if (customLocation.indexOf("blanchardstown") >= 0){
+          document.getElementById("match_ambulance").style.display = 'block';
+          window.map.setCenter(new google.maps.LatLng(53.3933, -6.3894))
+          window.map.setZoom(15);
+        }
+      }else if(genericLocation){
+        codeAddress(genericLocation);
+      }
     }
   };
 
@@ -239,11 +234,17 @@ function converse (textContent) {
 
 var ttsAudio = $('.audio-tts').get(0);
 
-
 // interpret typing enter in resultsText as an intention to submit
 $('#resultsText').keydown(function(event) {
-  // enter has keyCode = 13, change it if you want to use another button
-  if (event.keyCode == 13) {
+
+  var searchLocation = context.location;
+
+  if(searchLocation){
+   console.log("Hi Eamonn =====>>>> " + searchLocation)
+   codeAddress(searchLocation);
+  }
+
+  if (event.keyCode == 13) { // enter has keyCode = 13, change it if you want to use another button
     $('#playTTS').click();
     return false;
   }
@@ -285,7 +286,7 @@ function playTTSifInputSpeechIsOff() {
 	clearTimeout(timerID);
 
   console.log ('about to speak so turn off microphone');
-  var Microphone = require('./Microphone');
+  var Microphone = require('../Microphone');
   var micOptions = {
 //    bufferSize: ctx.buffersize
     bufferSize: 1024

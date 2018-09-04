@@ -25,6 +25,15 @@ GoogleMap.prototype.initMap = function() {
   var sandymount6 = {lat: 53.329496, lng:-6.210213 };
   var sandymount7 = {lat: 53.329433, lng:-6.210123 };
 
+  var limerick1 = {lat: 52.6604 , lng:-8.6373};
+  var limerick2 = {lat: 52.6614 , lng:-8.6473};
+  var limerick3 = {lat: 52.6654 , lng:-8.6343};
+  var limerick4 = {lat: 52.6674 , lng:-8.6273};
+  var limerick5 = {lat: 52.6704 , lng:-8.6853};
+  var limerick6 = {lat: 52.6504 , lng:-8.6678};
+  var blanchardstown1 = {lat:53.3932, lng:- 6.3892}
+
+
   this.map = new google.maps.Map(document.getElementById('map'), {
     center: ireland,
     zoom: 6
@@ -39,50 +48,101 @@ GoogleMap.prototype.initMap = function() {
   var clontarf2 = new google.maps.Marker({
     position: clontarf2,
     map: this.map,
-    title: 'Fire reported on Kincoard Rd from this location.'
+    title: 'Fire reported on Kincoard Rd from this location.',
+    icon : './images/fire.png'
   });
   var clontarf3 = new google.maps.Marker({
     position: clontarf3,
     map: this.map,
-    title: 'Fire reported on Kincoard Rd from this location.'
+    title: 'Fire reported on Kincoard Rd from this location.',
+    icon : './images/fire.png'
   });
   var sandymount2 = new google.maps.Marker({
     position: sandymount2,
     map: this.map,
-    title: 'Flood reported in Sandymount area from this location. High risk of flooding due to a breach in the sea wall at Strand road'
+    title: 'Flood reported in Sandymount area from this location. High risk of flooding due to a breach in the sea wall at Strand road',
+    icon : './images/water.png'
   });
   var sandymount3 = new google.maps.Marker({
     position: sandymount3,
     map: this.map,
-    title: 'Flood reported in Sandymount area from this location. High risk of flooding due to a breach in the sea wall at Strand road'
+    title: 'Flood reported in Sandymount area from this location. High risk of flooding due to a breach in the sea wall at Strand road',
+    icon : './images/water.png'
   });
   var sandymount4 = new google.maps.Marker({
     position: sandymount4,
     map: this.map,
-    title: 'Flood reported in Sandymount area from this location. High risk of flooding due to a breach in the sea wall at Strand road'
+    title: 'Flood reported in Sandymount area from this location. High risk of flooding due to a breach in the sea wall at Strand road',
+    icon : './images/water.png'
   });
   var sandymount5 = new google.maps.Marker({
     position: sandymount5,
     map: this.map,
-    title: 'Flood reported in Sandymount area from this location. High risk of flooding due to a breach in the sea wall at Strand road'
+    title: 'Flood reported in Sandymount area from this location. High risk of flooding due to a breach in the sea wall at Strand road',
+    icon : './images/water.png'
   });
   var sandymount5 = new google.maps.Marker({
     position: sandymount5,
     map: this.map,
-    title: 'Flood reported in Sandymount area from this location. High risk of flooding due to a breach in the sea wall at Strand road'
+    title: 'Flood reported in Sandymount area from this location. High risk of flooding due to a breach in the sea wall at Strand road',
+    icon : './images/water.png'
   });
   var sandymount6 = new google.maps.Marker({
     position: sandymount6,
     map: this.map,
-    title: 'Flood reported in Sandymount area from this location. High risk of flooding due to a breach in the sea wall at Strand road'
+    title: 'Flood reported in Sandymount area from this location. High risk of flooding due to a breach in the sea wall at Strand road',
+    icon : './images/water.png'
   });
   var sandymount7 = new google.maps.Marker({
     position: sandymount7,
     map: this.map,
-    title: 'Flood reported in Sandymount area from this location. High risk of flooding due to a breach in the sea wall at Strand road'
+    title: 'Flood reported in Sandymount area from this location. High risk of flooding due to a breach in the sea wall at Strand road',
+    icon : './images/water.png'
   });
 
+  var limerick1 = new google.maps.Marker({
+    position: limerick1,
+    map: map,
+    title: 'Flood reported in Bishops Quay area from this location. Several cars and businesses in danger.',
+    icon : './images/water.png'
+  });
+  var limerick2 = new google.maps.Marker({
+    position: limerick2,
+    map: map,
+    title: 'Two children trapped in house here. Flood water rising. Rapid dispatch.',
+    icon : './images/water.png'
+  });
+  var limerick3 = new google.maps.Marker({
+    position: limerick3,
+    map: map,
+    title: 'Elderly man trapped in house. Rapid dispatch required.',
+    icon : './images/water.png'
+  });
+  var limerick4 = new google.maps.Marker({
+    position: limerick4,
+    map: map,
+    title: 'Cars being swept away in this area.',
+    icon : './images/water.png'
+  });
+  var limerick5 = new google.maps.Marker({
+    position: limerick5,
+    map: map,
+    title: 'Received call from elderly farmer concerned for his livestock. ',
+    icon : './images/water.png'
+  });
+  var limerick6 = new google.maps.Marker({
+    position: limerick6,
+    map: map,
+    title: 'Flood reported in Bishops Quay area from this location. Several cars and businesses in danger.',
+    icon : './images/water.png'
+  });
 
+  var blanchardstown1 = new google.maps.Marker({
+    position: blanchardstown1,
+    map: map,
+    title: 'Received reports of a woman collapsing in the shopping centre. Ambulance has been dispatched.',
+    icon : './images/injury.png'
+  });
 
   this.infowindow = new google.maps.InfoWindow({
     content: document.getElementById('form')
