@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Watson Dispatch Manager</title>
+    <link href="css/watson-bootstrap-style.css" rel="stylesheet">
+    <link href="css/browser-compatibility.css" rel="stylesheet">
+    <link href="css/demo-stt.css" rel="stylesheet">
+	<link rel="icon" type="image/png" href="images/watson-conversation.png">
+  </head>
+ <body>
+    <!-- top nav section -->
+
+    <!-- Service Description Bar -->
+    <!-- Step 1 Section-->
+	<div class="container">
+	    <div class="col-lg-12 col-md-12 col-xs-12 main-header">
+					<p><img src="images/watson-logo.png" width="100px" height="100px" /></p>
+          <h1>Watson Dispatch Manager</h1>
+        </div>
+	  <!-- Step 3 Section-->
+	  <!-- First column of inputs -->
+	
+	
+		<div class="row">
+			<div class="help-block">
+				<button class="collapsible" onclick="return toggleMe('content')">What is Watson Dispatch Manager?</button>
+					<div id="content" style="display:none"> 
+						<p>Every year, thousands of lives are lost during natural disasters as dispatch operators for emergency
+						services simply cannot deal with the volume of calls they receive for every incident. Watson Dispatch Manager, a project
+						 conceived in IBM Ireland during the recent Call For Code competition, can solve this
+						problem by quickly assessing each case, gathering appropriate information and ensuring that the most urgent queries are dealt with first.
+						</p>
+						<div style="text-align:center;">
+							<p>
+								<a href="http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/">Built with IBM Watson</a>
+								|
+								<a href="http://www.ibm.com/privacy/us/en/">Terms and Privacy Policy</a>
+								|
+								<a href="https://github.com/bodonova/watson-dispatch-manager">Fork me on Github</a>
+							</p>
+							<p><img src='images/cfc2018.png' alt="Call for Code logo 2018" /></p>
+					</div>
+					</div>
+				</div>
+		</div>	
+
+		<div class="row">
+		  <div class="col-lg-12 col-md-12 col-sm-12">
+			<div class="audioParent">
+			  <audio style="display:none" class="audio" controls>
+				Your browser does not support the audio element.
+			  </audio>
+			</div>
+		  </div>
+		</div><!-- row -->
+
+
+
+
+<!-- map start -->
+<div class="row">
+<div id="map"></div>
+<div id="form">
+	<table>
+	<tr><td>Name:</td> <td><input type='text' id='name'/> </td> </tr>
+	<tr><td>Address:</td> <td><input type='text' id='address'/> </td> </tr>
+	<tr><td>Type:</td> <td><select id='type'> +
+						 <option value='fire' SELECTED>Fire</option>
+						 <option value='flood'>Flood</option>
+						 <option value='ambulance'>Ambulance</option>
+						 </select> </td></tr>
+						 <tr><td></td><td><input type='button' value='Save' onclick='saveData()'/></td></tr>
+	</table>
+</div>
+<!-- map end -->
+</div>
+
+		<div class="manager">
+			<!-- dispatch_row title -->
+			<div class="dispatch_row title">
+				<ul>
+					<li>Incident #</li>
+					<li>Caller Name</li>
+					<li><span class="title-hide"></span>Type</li>
+					<li>Dispatched?</li>
+					<li>Time to destination</li>
+				</ul>
+			</div>
+			<!-- dispatch_row 1 - fadeIn -->
+			<div class="match_ambulance" id="match_ambulance">
+				<section class="dispatch_row-fadeIn-wrapper">
+					<article class="dispatch_row fadeIn fire">
+						<ul>
+							<li><a href="#">Incident #41552</a><span class="small">2mins</span></li>
+							<li>Patrick Curtin</li>
+							<li>Ambulance</li>
+							<li>Yes</li>
+							<li>0:02mins</li>
+						</ul>
+						<ul class="more-content">
+							<li>Man found unresponsive in IBM technology campus, Building 6. Believed he was awestruck by the amazing cognitive capabilities of Watson.
+							</li>
+						</ul>
+					</article>
+				</section>
+				</div>
+
+			<div class="match_flood" id="match_flood">
+			<section class="dispatch_row-fadeIn-wrapper">
+				<article class="dispatch_row fadeIn flood">
+					<ul>
+						<li><a href="#">Incident #41552</a><span class="small">2mins</span></li>
+						<li>Brian O'Donovan</li>
+						<li>Flood</li>
+						<li>Yes</li>
+						<li>0:12mins</li>
+					</ul>
+					<ul class="more-content">
+						<li>Fifteen+ reports about flooding in the Sandymount area. There is breach in the sea wall at Strand road.
+						</li>
+					</ul>
+				</article>
+			</section>
+			</div>
+
+			<div class="match_fire" id="match_fire">
+				<section class="dispatch_row-fadeIn-wrapper">
+					<article class="dispatch_row fadeIn fire">
+						<ul>
+							<li><a href="#">Incident #41552</a><span class="small">2mins</span></li>
+							<li>Sean Sweeney</li>
+							<li>Fire</li>
+							<li>Yes</li>
+							<li>0:12mins</li>
+						</ul>
+						<ul class="more-content">
+							<li>Fire on Kincora road Clontarf. There are small children needing to be rescued house 44 Kincora Road.
+							</li>
+						</ul>
+					</article>
+				</section>
+				</div>
+		
+			</article>
+		</div>
+
+		<div class="row">
+		  <nav class="navbar navbar-inverse">
+			  <ul class="navbar-text">
+					<li id="recordButton" class="button-row nav-inverse-color">
+						<img id="microphoneIcon" src="images/microphone.svg" class="icon">
+                        <span class="nav-label">Toggle Microphone</span>
+					</li>
+			  </ul>
+		  </nav>
+		</div>
+
+		<!-- Tab panes -->
+		<div class="row" style="  margin: 0;">
+		  <div class="col-lg-12 col-md-12 col-sm-12" style="padding: 0;">
+			<div class="well">
+			  <form autocomplete="off" class="form-horizontal">
+				<div role="tabpanel">
+
+				  <!-- Nav tabs -->
+				  <ul class="nav nav-tabs" role="tablist">
+					<li role="presentation" class="active"><a href="#home2" aria-controls="home" role="tab" data-toggle="tab">Caller</a></li>
+					<!-- <li role="presentation"><a href="#profile2" aria-controls="profile" role="tab" data-toggle="tab">JSON</a></li> -->
+				  </ul>
+
+				  <div class="hr-tab"></div>
+
+				  <fieldset>
+
+					<div class="row error-row">
+					  <div class="col-lg-12">
+						<div id="errorAlert" >
+						  <span id="errorMessage"></span>
+						  <a class="pull-right" href="#" id="errorClose">&times;</a>
+						</div>
+					  </div>
+					</div>
+
+					<div class="row notification-row">
+					  <div class="col-lg-12">
+						<div id="notificationAlert" >
+						  <span id="notificationMessage"></span>
+						  <a class="pull-right" href="#" id="notificationClose">&times;</a>
+						</div>
+					  </div>
+					</div>
+
+
+					<div class="form-group row tabpanel-row">
+					  <div class="col-lg-12">
+						<div class="tab-content">
+						  <div role="tabpanel" class="tab-pane active" id="home2">
+							<textarea id="resultsText"></textarea>
+						  </div>
+						</div>
+					  </div><!-- .col-lg-12 -->
+					</div>
+				  </fieldset>
+				</div>
+			  </form>
+			</div>
+		  </div><!-- /.well -->
+		</div><!-- /.tabpanel -->
+
+
+		<div class="well">
+			<div role="tabpanel">
+				<ul class="nav nav-tabs" role="tablist">
+					<li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Dispatcher</a></li>
+				</ul>
+				<div class="hr-tab"></div>
+				<fieldset>
+					<div class="col-lg-12">
+						<div class="tab-content">
+							<div role="tabpanel" class="tab-pane active" id="response">
+								<textarea readonly></textarea>
+							</div>
+							<button id="playTTS">
+								<span>&#9654;</span>
+							</button>
+							<button id="stopTTS">
+								<span>&#x025FC;</span>
+							</button>
+						</div>
+					</div>
+				</fieldset>
+			</div>
+		</div>
+
+		<audio class="audio-tts" style="display:none">
+			Your browser does not support the audio element.
+		</audio>
+
+	  </div><!-- /.container -->
+
+      </div>
+      <!-- for file upload dialog in toolbar -->
+      <input style="display:none" type="file" id="fileUploadDialog">
+
+      <!-- Place js files at the end of the document, with fallbacks for CDNs -->
+      <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+      <script>window.jQuery || document.write('<script src="js/jquery-1.11.3.min.js"><\/script>')</script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+      <script> (typeof $().emulateTransitionEnd == 'function')|| document.write('<script src="js/bootstrap-3.3.5.min.js"><\/script>')</script>
+      <script src="js/main.js"></script>
+      <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDL-6qVt_s0lMHYF8D9hefFLG-C805mdJc&callback=initMap"></script>
+      <!-- Replace the value of the key parameter with your own API key. --!>
+  </body>
+</html>
