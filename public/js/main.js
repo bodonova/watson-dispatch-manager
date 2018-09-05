@@ -1235,6 +1235,7 @@ function converse (textContent) {
       var genericLocation = context.location;
       var customLocation = context.location2;
       if(customLocation){
+        document.getElementById("manager").style.display = 'block';
         if (customLocation.indexOf("Kincora") >= 0){
           document.getElementById("match_fire").style.display = 'block';
           window.map.setCenter(new google.maps.LatLng(53.3606109,-6.1834204))
