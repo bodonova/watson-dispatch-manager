@@ -209,47 +209,6 @@
 	function doNothing () {
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// a global context variable so we remember it between calls
-var context = {};
-
-function conv_init () {
-  console.log("Initialising conversation");
-  // Build request payload
-  var payloadToWatson = {"text": " " , "context": {} };
-  console.log("meaasge payload: "+JSON.stringify(payloadToWatson));
-
-  // Built http request
-  var http = new XMLHttpRequest();
-  http.open('POST', '/message', true);
-  http.setRequestHeader('Content-type', 'application/json');
-  http.onreadystatechange = function() {
-    if (http.readyState === 4 && http.status === 200 && http.responseText) {
-      console.log ('response='+http.responseText);
-      var data =  JSON.parse(http.responseText);
-      context = data.context; // store for future calls
-      $('#response textarea').val(data.output.text);
-    }
-  };
-
-  // Send request
-  var params = JSON.stringify(payloadToWatson);
-  http.send(params);
-}
-
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 /**
  * Copyright 2015 IBM Corp. All Rights Reserved.
@@ -768,9 +727,6 @@ $(document).ready(function() {
 
   });
 
-  console.log ("Initializing the conversation service");
-  conv_init();
-
 });
 
 },{"./Microphone":1,"./data/models.json":2,"./utils":7,"./views":13}],6:[function(require,module,exports){
@@ -1209,6 +1165,37 @@ function getTargetLanguageCode() {
 	    mt_target = 'pt';
 	return mt_target;
 }
+
+// a global context variable so we remember it between calls
+var context = {};
+
+function conv_init () {
+  console.log("Initialising conversation");
+  // Build request payload
+  var payloadToWatson = {"text": " " , "context": {} };
+  console.log("meaasge payload: "+JSON.stringify(payloadToWatson));
+
+  // Built http request
+  var http = new XMLHttpRequest();
+  http.open('POST', '/message', true);
+  http.setRequestHeader('Content-type', 'application/json');
+  http.onreadystatechange = function() {
+    if (http.readyState === 4 && http.status === 200 && http.responseText) {
+      console.log ('response='+http.responseText);
+      var data =  JSON.parse(http.responseText);
+      context = data.context; // store for future calls
+      $('#response textarea').val(data.output.text);
+      TTS(data.output.text);
+    }
+  };
+
+  // Send request
+  var params = JSON.stringify(payloadToWatson);
+  http.send(params);
+}
+
+console.log ("Initializing the conversation service");
+conv_init();
 
 
 function converse (textContent) {
